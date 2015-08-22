@@ -1,0 +1,22 @@
+<div ng-controller="CustomInputDemoCtrl as ctrl" layout="column">
+  <md-content class="md-padding" layout="column">
+    <h2 class="md-title">Use <code>md-autocomplete</code>  to build an ordered set of chips.</h2>
+    <md-chips ng-model="ctrl.selectedVegetables" md-autocomplete-snap md-require-match>
+      <md-autocomplete
+          md-selected-item="ctrl.selectedItem"
+          md-search-text="ctrl.searchText"
+          md-items="item in ctrl.querySearch(ctrl.searchText)"
+          md-item-text="item.name"
+          placeholder="Search for a vegetable">
+        <span md-highlight-text="ctrl.searchText">{{item.name}} :: {{item.testament}}</span>
+      </md-autocomplete>
+      <md-chip-template>
+        <span>
+          <strong>{{$chip.name}}</strong>
+          <em>({{$chip.testament}})</em>
+        </span>
+      </md-chip-template>
+    </md-chips>
+    <br />
+  </md-content>
+</div>

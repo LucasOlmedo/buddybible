@@ -1,0 +1,225 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size:14px;
+  height:100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+*{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+*:active{
+  box-shadow: none;
+}
+
+.md-content{
+  background-color: #eee !important;
+}
+
+.md-thumb-container{
+  -webkit-transition: all 1s linear;
+  -o-transition: all 1s linear;
+  transition: all 1s linear;
+}
+
+.more-button{
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 30px !important;
+  height: 30px !important;
+  /*border-radius: 30px !important;*/
+}
+.link-btn{
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 20px !important;
+  box-shadow: 1px 1px 2px  #C5E1A5;
+  margin:15px 10px!important;
+  margin-bottom: -50px !important;
+  cursor: pointer;
+
+  -webkit-transition: all 0.35s linear;
+  -o-transition: all 0.35s linear;
+  transition: all 0.35s linear;
+}
+.link-btn:not(.active):hover{
+  box-shadow: 0 0 2px  #C5E1A5;
+}
+.link-btn.active, .link-btn:active{
+  background-color: #8BC34A !important;
+}
+
+.md-control{
+  min-width: 30px !important;
+}
+.md-control:hover, .md-control.active{
+  background-color: #EFF3D6 !important;
+}
+.md-control.trans{
+  /*background-color:rgba(249, 251, 231, 0.5);*/
+}
+.md-control.trans:hover{
+  background-color:transparent !important;
+}
+.nowplaying{
+  font-weight:  bolder !important;
+}
+.pre-action{
+  background-color: #F3F3F3
+}
+.transition{
+  -webkit-transition: all 0.35s linear;
+  -o-transition: all 0.35s linear;
+  transition: all 0.35s linear;
+}
+.col-white{
+  color: #F0F7E7;
+}
+/* Toolbar area */
+
+.menu {
+  background-color: transparent;
+  border: none;
+  height: 38px;
+  margin: 16px;
+  width: 36px;
+}
+
+md-toolbar h1 {
+  margin: auto;
+}
+
+/* Sidenav area */
+
+md-list .md-button {
+  color: inherit;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+}
+  md-list .md-button.selected {
+    background-color: #F5FCFF;
+    color: #03a9f4;
+  }
+
+  md-sidenav  md-list {
+    padding: 0px 0px 8px 0px;
+  }
+
+
+/* Primary content area */
+
+#content {
+  overflow: hidden;
+}
+
+#content  {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+}
+
+#content .md-button.contact {
+  background-color: transparent;
+  border: none;
+  width: 48px;
+  height: 48px;
+  margin: 8px auto 16px 0;
+  position: absolute;
+  top: 10px;
+  right: 40px;
+}
+
+#content md-icon.avatar {
+  margin-top: 10px;
+}
+
+#content .md-button.contact > md-icon {
+  fill:black;
+  width:36px;
+  height:36px;
+}
+
+md-button.menuBtn > md-icon {
+  fill:white;
+  width:24px;
+  height:24px;
+}
+
+#content .md-button.contact:active > md-icon {
+  background-color: #dadada;
+  border-radius: 75%;
+  padding:4px;
+  transition: all 100ms ease-out 30ms;
+}
+
+#content img {
+  display: block;
+  height: auto;
+  max-width: 500px;
+}
+
+/* Utils */
+
+.content-wrapper {
+  position: relative;
+}
+
+/* Typography support coming in 0.8.0 */
+
+md-toolbar h1 {
+  font-size: 1.250em;
+  font-weight: 400;
+}
+
+.avatar {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0px;
+  vertical-align: middle;
+  zoom:0.70;
+  transform: translateZ(0);
+  -webkit-transform: scale(0.70);
+  -moz-transform:scale(0.70);
+}
+
+
+md-bottom-sheet  md-icon {
+  margin-right:20px;
+}
+
+span.name {
+  font-weight: bold;
+  font-size:1.1em;
+  padding-left:5px;
+}
+
+
+.chipsdemoCustomInputs md-content.autocomplete {
+  min-height: 200px; }
+.chipsdemoCustomInputs input[type=number] {
+  width: 110px; }
+.chipsdemoCustomInputs .veggie-option {
+  float: left;
+  width: 20%;
+  box-sizing: border-box;
+  padding: 0 8px; }
+.chipsdemoCustomInputs .veggie-option .md-item-text {
+  padding: 8px;
+  background: #f0f0f0;
+  border-radius: 3px; }
+.chipsdemoCustomInputs .veggie-option .md-item-text h3, .chipsdemoCustomInputs .veggie-option .md-item-text p {
+  padding: 0;
+  margin: 0; }

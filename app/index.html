@@ -1,0 +1,121 @@
+<html lang="en" ng-app="buddybible">
+
+<head>
+  <title>Buddy Bible</title>
+  <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'> -->
+  <link rel="stylesheet" href="assets/css/angular-material.min.css"/>
+  <link rel="stylesheet" href="assets/css/app.css"/>
+  <link rel="icon" href="favicon.ico">
+</head>
+
+<body layout="row" ng-controller="AppCtrl">
+  <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar class="md-tall md-hue-" styl="background:url('assets/logosvg.svg');background-position:center;background-size:cover;">
+      <span flex></span>
+      <md-list-item class="md-1-lin">
+        <!-- <img ng-src="dp.jpg" class="avatar" alt="user avatar"/> -->
+        <div class="md-list-item-text">
+          <h4>Buddy Bible</h4>
+        </div>
+      </md-list-item>
+    </md-toolbar>
+    
+    <md-content flex i="content" class="md-primary">
+      <span flex></span>
+      <md-divider></md-divider>
+      <md-list>
+        <md-subheader>Bible</md-subheader>
+        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
+          <md-icon md-svg-icon="grid"></md-icon>
+          <p> All Books </p>
+        </md-list-item>
+        <md-list-item ng-click="navigateTo(albums, $event)">
+          <md-icon md-svg-icon="favorite"></md-icon>
+          <p> Favorited Verses </p>
+        </md-list-item>
+        <md-list-item ng-click="navigateTo(albums, $event)">
+          <md-icon md-svg-icon="playlist"></md-icon>
+          <p> My Verse Collections </p>
+        </md-list-item>
+        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
+          <md-icon md-svg-icon="save"></md-icon>
+          <p> My Highlighted Verses</p>
+        </md-list-item>
+        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
+          <md-icon md-svg-icon="eq"></md-icon>
+          <p> Bible Stories</p>
+        </md-list-item>
+        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
+          <md-icon md-svg-icon="person_outline"></md-icon>
+          <p> My Resolutions </p>
+        </md-list-item>
+        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
+          <md-icon md-svg-icon="replay"></md-icon>
+          <p> History </p>
+        </md-list-item>
+
+        <md-subheader>Discover</md-subheader>
+        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
+          <md-icon md-svg-icon="rate"></md-icon>
+          <p> Famous / Relevant Verses </p>
+        </md-list-item>
+        <md-list-item ng-click="navigateTo(albums, $event)">
+          <md-icon md-svg-icon="people_outline"></md-icon>
+          <p> Podcasts </p>
+        </md-list-item>
+        <md-list-item ng-click="navigateTo(albums, $event)">
+          <md-icon md-svg-icon="playlist"></md-icon>
+          <p> Daily Word Services </p>
+        </md-list-item>
+
+        <md-divider></md-divider>
+        <md-subheader>Settings</md-subheader>
+        <md-list-item>
+          <md-icon md-svg-icon="fullscreen"></md-icon>
+          <p> Turn Fullscreen {{onfullscreen ? 'off' : 'on' }} </p>
+          <md-switch class="md-secondary md-primary" ng-model="onfullscreen" ng-change="goFullscreen()"></md-switch>
+        </md-list-item>
+        <md-list-item>
+          <md-icon md-svg-icon="volume_up"></md-icon>
+          <p> Turn Voice {{onfullscreen ? 'off' : 'on' }} </p>
+          <md-switch class="md-secondary md-primary" ng-model="voice" ng-chang="allowVoice()"></md-switch>
+        </md-list-item>
+        <md-list-item>
+          <md-icon md-svg-icon="fullscreen"></md-icon>
+          <p> Turn screen reader {{onfullscreen ? 'off' : 'on' }} </p>
+          <md-switch class="md-secondary md-primary" ng-model="voice" ng-chang="allowVoice()"></md-switch>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </md-sidenav>
+  <div id="main" layout="column" class="relative" layout-fill role="main" ui-view>
+    
+  </div>
+  <!-- Angular Material Dependencies -->
+  <script src="assets/js/lib/angular.min.js"></script>
+  <script src="assets/js/lib/angular-animate.min.js"></script>
+  <script src="assets/js/lib/angular-aria.min.js"></script>
+  <script src="assets/js/lib/angular-material.min.js"></script>
+  <script src="assets/js/lib/angular-material-icons-0.4.0.min.js"></script>
+  <script src="assets/js/lib/angular-ui-router.js"></script>
+  <script src="assets/js/lib/angular-adaptive-backgrounds.min.js"></script>
+  <script src="assets/js/lib/jquery-1.11.1.js"></script>
+  <script src="assets/js/lib/angular-fullscreen.js"></script>
+  <script src="assets/js/lib/plangular.min.js"></script>
+  
+  <!-- CDNS
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="http://d2v52k3cl9vedd.cloudfront.net/plangular/3.1.0/plangular.min.js"></script>
+  -->
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/controllers.js"></script>
+  <script src="assets/js/services.js"></script>
+  <script>
+    $(document).ready(function(){
+      // var container = '<div id="main" layout="column" class="relative" layout-fill role="main" ui-view></div>';
+      // $('body').delay(500).append(container);
+    });
+  </script>
+</body>
+
+</html>
