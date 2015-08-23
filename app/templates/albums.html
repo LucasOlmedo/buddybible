@@ -54,14 +54,10 @@
 
 	<div layout="column" flex>
 		<div flex layout="column" layout-padding style="padding:0;opacity:1;">
-			<md-button class="md-fab md-fab-bottom-right md-primary" aria-label="Add to favourites" ng-click="addingnewquestion = !addingnewquestion" aria-label="Add question" ng-if="showVerses">
-				      <md-icon md-svg-icon="favorite_white"    ng-if="!addingnewquestion"></md-icon>
-				      <md-icon md-svg-icon="favorited_white" ng-if="addingnewquestion"></md-icon>
-				    </md-button>
 			<md-card style="margin:0;margin-bottom:5px;">
 				<div layout="row">
 					<span flex="5" ng-hid="searchingChapter"></span>
-					<h2 class="md-title" ng-hide="searchingChapter" style="text-align:center;">{{selectedBook.name}} {{chapters.selectedIndex + 1}}</h2>
+					<h2 class="md-title" ng-hide="searchingChapter" style="text-align:center;">{{selectedBook.name}} {{chapters.selectedIndex + 1}} <span ng-if="showVerses">: {{verseIndex + 1}}</span></h2>
 					<span flex ng-hide="searchingChapter"></span>
 					<md-button aria-label="Search" ng-click="showVerses = !showVerses" class="md-icon-button" ng-hide="searchingChapter">
 						<md-icon md-svg-icon="more_horiz"></md-icon>
@@ -83,33 +79,123 @@
 				          {{$index+1}}
 				        </md-tab>
 				    </md-tabs>
-				    <div class="md-toolbar-tools" ng-show="showVerses" flex>
-				    	<md-button aria-label="Go to previous verse" ng-click="prevVerse()" class="md-icon-button">
-							<md-icon md-svg-icon="go-prev"></md-icon>
-						</md-button>
-						<md-input-container flex>
-							<md-select placeholder="Pick" ng-model="versesIndex">
-							    <md-option value="$index" ng-repeat="verse in selectedBook.chapters[chapters.selectedIndex].verses">
-							    	Verse {{$index}}
-								</md-option>
-							</md-select>
-						</md-input-container>
-				    	<md-button aria-label="Go to next verse" ng-click="nextVerse()" class="md-icon-button">
-							<md-icon md-svg-icon="go-next"></md-icon>
-						</md-button>
-				    </div>
 				</div>
 			</md-card>
-    		<md-content flex style="padding:0" layout="row">
+    		<md-content flex style="padding:0" layout="row" id="verseStuff">
 				<md-content md-scroll-y layout="column" flex="15" ng-if="showVerses">
-		    		<md-list-item ng-repeat="chapter in selectedBook.chapters" style="text-align:center" ng-click="chapters.selectedIndex = $index">
+		    		<md-list-item ng-repeat="chapter in selectedBook.chapters" style="text-align:center" ng-click="setChapter($index)">
 		    			<md-divider></md-divider>
 		    			{{$index+1}}
 		    		</md-list-item>
 		    	</md-content>
-			    <md-content md-scroll-y layout="column" flex style="border-left:1px solid #E0E0E0;padding:10px">
-			    	<span ng-bind-html="to_trusted(selectedBook.chapters[chapters.selectedIndex].stringVerses)"></span>
+			    <md-content layout="column" flex style="border-left:1px solid #E0E0E0;padding:10px">
+				    <div ng-if="showVerses">
+				    	<br>
+				    	<div class="md-toolbar-tools" ng-show="showVerses" flex>
+					    	<div flex></div>
+					    	<md-button aria-label="Go to previous verse" ng-click="prevVerse()" class="md-icon-button">
+								<md-icon md-svg-icon="go-prev"></md-icon>
+							</md-button>						
+					    	<md-button aria-label="Go to next verse" ng-click="nextVerse()" class="md-icon-button">
+								<md-icon md-svg-icon="go-next"></md-icon>
+							</md-button>
+					    </div>
+					    <br>
+				    	<md-list-item style="font-size:25px">
+			    			{{selectedBook.chapters[chapters.selectedIndex].verses[verseIndex][verseIndex + 1]}}
+			    		</md-list-item>
+			    		<br><br><br>
+
+			    		<md-divider></md-divider>
+			    		
+			    		<md-content style="padding:20px">
+			    			Verse Details and sundry
+			    		</md-content>
+				    </div>
+			    	<span ng-bind-html="to_trusted(selectedBook.chapters[chapters.selectedIndex].stringVerses)" ng-if="!showVerses"></span>
 		    	</md-content>
+
+		    	<div class="lock-size" ng-controller="fabdialCtrl as demo">
+					<md-fab-speed-dial ng-if="showVerses" md-direction="up" class="md-fling md-fab-bottom-righ">
+				        <md-fab-trigger>
+							<md-button aria-label="menu" class="md-fab md-primary" ng-click="demo.openDialog($event, 'add')">
+								<md-tooltip md-direction="left" class="md-primary">Menu</md-tooltip>
+								<md-icon md-svg-icon="add_white"></md-icon>
+							</md-button>
+				        </md-fab-trigger>
+				        
+				        <md-fab-actions>
+							<md-button aria-label="Share" class="md-fab md-raised md-mini" ng-click="demo.openDialog($event, 'share')">
+							  <md-tooltip md-direction="left" class="md-primary">Share</md-tooltip>
+							  <md-icon md-svg-icon="share"></md-icon>
+							</md-button>
+							<md-button aria-label="Favorite" class="md-fab md-raised md-mini" ng-click="demo.openDialog($event, 'favorite')">
+							  <md-tooltip md-direction="left" class="md-primary">Favorite</md-tooltip>
+							  <md-icon md-svg-icon="favorite"></md-icon>
+							</md-button>
+				        </md-fab-actions>
+			      	</md-fab-speed-dial>
+			    </div>
+
+			    <script type="text/ng-template" id="dialog.html">
+				    <md-dialog>
+					    <md-dialog-content>
+					      	<div ng-if="dialog.action === 'share'">
+					      		<p> Share On: 
+						      		<md-button class="md-primary md-flat" md-theme="{{ shareTheme }}" md-theme-watch>
+						      			{{ share.option }}
+						      		</md-button> 
+						      	</p>
+							    <md-radio-group ng-model="share.option" ng-change="shareTheme = share.option.toLowerCase()">
+							    	<md-radio-button value="Facebook" class="md-primary" md-theme="facebook">Facebook</md-radio-button>
+							      	<md-radio-button value="Twitter"  class="md-primary" md-theme="twitter">Twitter </md-radio-button>
+						      		<md-radio-button value="Google"  class="md-primary" md-theme="google">Google+</md-radio-button>
+							    </md-radio-group>
+					      	</div>
+					      	<div ng-if="dialog.action === 'favorite'">
+					      		Verse {{verseFavd ? 'Removed from' : 'Added to'}}  Favourites 
+				      			<md-button class="md-primary md-flat" ng-click="verseFavd = !verseFavd">
+				      			 {{verseFavd ? 'Add' : 'Remove'}}
+				      			</md-button> 
+					      	</div>
+					      	<div ng-if="dialog.action === 'add'">
+					      		<div ng-show="!dialog.addingnewcollection">
+					      			Check to add in the collection or <br>
+						      		<md-button class="md-primary" md-theme="facebook" ng-click="dialog.addingnewcollection = true">
+						      			Create New Collection
+						      		</md-button>
+						      		<md-list>
+						      			<md-list-item ng-repeat="collection in dialog.collections">
+						      				{{collection.name}} <md-checkbox class="md-secondary md-primary"></md-checkbox>
+						      			</md-list-item>
+						      		</md-list>
+					      		</div>
+					      		<div layout="row" ng-show="dialog.addingnewcollection">
+					      			<div flex>
+						      			<md-input-container md-no-float>
+							              <label>&nbsp;</label>
+							              <input ng-model="newcol" type="text" placeholder="Collection name">
+							            </md-input-container>
+						      		</div>
+						      		<md-button class="md-icon-button" md-theme="success" ng-click="dialog.addToCollection(newcol)">
+						      			<md-icon md-svg-icon="check"></md-icon>
+						      		</md-button>
+						      		<md-button class="md-icon-button" md-theme="google" ng-click="dialog.addingnewcollection = false">
+						      			<md-icon md-svg-icon="cancel"></md-icon>
+						      		</md-button>
+					      		</div>
+					      	</div>
+				  		</md-dialog-content>
+				  		<div class="md-actions">
+					        <md-button aria-label="Close dialog" ng-click="dialog.close()" class="md-flat">
+					          Cancel
+					        </md-button>
+					        <md-button aria-label="Submit dialog" ng-click="dialog.submit()" class="md-primary" md-theme="success">
+					          Ok
+					        </md-button>
+					    </div>
+				    </md-dialog>
+				</script>
 	    	</md-content>
 		</div>
 	</div>

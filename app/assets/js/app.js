@@ -7,29 +7,17 @@ app.directive('userAvatar', function() {
   };
 });
 
-app.config(function($mdThemingProvider, $mdIconProvider, $stateProvider, $urlRouterProvider) {
-  var customBlueMap = $mdThemingProvider.extendPalette('light-green', {
-    'contrastDefaultColor': 'light',
-    'contrastDarkColors': ['50'],
-    '50': 'ffffff'
-  });
-  $mdThemingProvider.definePalette('customBlue', customBlueMap);
-  $mdThemingProvider.theme('default')
-    .primaryPalette('purple', {
-      'default': '500',
-      'hue-1': '50'
-    })
-    .accentPalette('orange');
-  $mdThemingProvider.theme('input', 'default')
-    .primaryPalette('grey')
-
+app.config(function($mdIconProvider, $stateProvider, $urlRouterProvider) {
+  
   $mdIconProvider
      .defaultIconSet("./assets/svg/avatars.svg", 128)
       .icon("add"       , "./assets/svg/ic_add.svg"                  , 24)
+      .icon("add_white"       , "./assets/svg/ic_add_white.svg"                  , 24)
       .icon("alarm"       , "./assets/svg/ic_alarm.svg"                  , 24)
       .icon("album"       , "./assets/svg/ic_album.svg"                  , 24)
       .icon("back"       , "./assets/svg/ic_arrow_back.svg"                  , 24)
       .icon("cancel"       , "./assets/svg/ic_clear.svg"                  , 24)
+      .icon("check"       , "./assets/svg/ic_check.svg"                  , 24)
       .icon("edit"       , "./assets/svg/ic_edit.svg"                  , 24)
       .icon("eq"       , "./assets/svg/ic_hearing.svg"                  , 24)
       .icon("graphic_eq"       , "./assets/svg/ic_graphic_eq.svg"                  , 24)
@@ -72,6 +60,7 @@ app.config(function($mdThemingProvider, $mdIconProvider, $stateProvider, $urlRou
       .icon("search_white"       , "./assets/svg/ic_search_white.svg" , 24)
       .icon("settings"      , "./assets/svg/ic_settings.svg"        , 24)
       .icon("share"      , "./assets/svg/share.svg"                 , 24)
+      .icon("share_white"      , "./assets/svg/ic_share_white.svg"                 , 24)
       .icon("shuffle"       , "./assets/svg/ic_shuffle.svg"                  , 24)
       .icon("sound_waves"       , "./assets/svg/ic_sound_waves.svg"       , 24)
       .icon("stop"       , "./assets/svg/ic_stop.svg"                  , 24)
@@ -100,6 +89,29 @@ app.config(function($mdThemingProvider, $mdIconProvider, $stateProvider, $urlRou
         templateUrl: "./templates/albums.html"
     })
 });
+
+app.config(function($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+          .primaryPalette('purple')
+          .accentPalette('orange')
+          .warnPalette('light-green')
+
+    $mdThemingProvider.theme('facebook')
+          .primaryPalette('indigo')
+
+    $mdThemingProvider.theme('twitter')
+      .primaryPalette('light-blue')
+
+    $mdThemingProvider.theme('google')
+      .primaryPalette('red');
+
+    $mdThemingProvider.theme('success')
+      .primaryPalette('green');
+    
+    // This is the absolutely vital part, without this, changes will not cascade down through the DOM.
+    $mdThemingProvider.alwaysWatchTheme(true);
+  });
+
 app.filter('highlight', function($sce) {
   return function(text, phrase) {
     if (phrase) text = text.replace(new RegExp('('+phrase+')', 'gi'),

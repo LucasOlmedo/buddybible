@@ -5,6 +5,7 @@ app.controller('AppCtrl', function($scope, $sce, $mdMedia, Fullscreen, $location
   $scope.selectedBook =  {};
   $scope.selectedBook.name     = 'Genesis';
   $scope.selectedBook.chapters = books.getChapters('Genesis');
+  $scope.verseIndex = 0;
   $scope.bookSorts = [{testament : ''}, {testament : 'Old'},{testament : 'New'}];
 
   // SCREEN SIZE VARIABLES
@@ -21,7 +22,26 @@ app.controller('AppCtrl', function($scope, $sce, $mdMedia, Fullscreen, $location
     // if(!$scope.selectedBook.name === book){
       $scope.selectedBook.name     = book;
       $scope.selectedBook.chapters = books.getChapters(book);
+      $scope.verseIndex = 0;
     // }
+  }
+
+  $scope.setChapter = function(index){
+    $scope.chapters.selectedIndex = index;
+  }
+
+  $scope.nextVerse = function(){
+    if($scope.verseIndex === $scope.selectedBook.chapters.length)
+      return false
+    else
+      parseFloat($scope.verseIndex +=1);
+  }
+
+  $scope.prevVerse = function(){
+    if($scope.verseIndex === 0)
+      return false
+    else
+      parseFloat($scope.verseIndex -=1);
   }
 
   $scope.showDtails = function(bookId){
@@ -104,6 +124,41 @@ app.controller('bookTagsCtrl', DemoCtrl);
       });
     }
   }
+
+app.controller('fabdialCtrl', function($mdDialog) {
+  var self = this;
+  self.openDialog = function($event, action) {
+    // Show the dialog
+    $mdDialog.show({
+      clickOutsideToClose: true,
+      parent: angular.element(document.querySelector('#verseStuff')),
+      controller: function($mdDialog) {
+        // Save the clicked item
+        this.action = action;
+        this.collections = [
+          {name: 'Prophetic Scriptures'},
+          {name: 'Famous Stories'},
+        ]
+        // Setup some handlers
+        this.close = function() {
+          $mdDialog.cancel();
+        };
+        this.submit = function() {
+          $mdDialog.hide();
+        };
+        this.addToCollection = function(val){
+          var collection = {};
+          collection.name = val;
+          this.collections.push(collection);
+          this.addingnewcollection = false;
+        }
+      },
+      controllerAs: 'dialog',
+      templateUrl: 'dialog.html',
+      targetEvent: $event
+    });
+  }
+});
 
 function hasWhiteSpace(s) {
   return /\s/g.test(s);
