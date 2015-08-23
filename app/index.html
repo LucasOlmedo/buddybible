@@ -8,7 +8,7 @@
   <link rel="icon" href="favicon.ico">
 </head>
 
-<body layout="row" ng-controller="AppCtrl">
+<body layout="row">
   <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
     <md-toolbar class="md-tall md-hue-" styl="background:url('assets/logosvg.svg');background-position:center;background-size:cover;">
       <span flex></span>
@@ -24,72 +24,76 @@
       <span flex></span>
       <md-divider></md-divider>
       <md-list>
-        <md-subheader>Bible</md-subheader>
-        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
+        <md-subheader class="md-no-sticky">Main</md-subheader>
+        <md-list-item class="md-primary" href="/">
+          <md-icon md-svg-icon="home"></md-icon>
+          <p> Home </p>
+        </md-list-item>
+        <md-list-item class="md-primary" href="/">
+          <md-icon md-svg-icon="person_outline"></md-icon>
+          <p> My Resolutions </p>
+        </md-list-item>
+        <md-list-item href="/subscriptions">
+          <md-icon md-svg-icon="playlist"></md-icon>
+          <p> Subscriptions </p>
+        </md-list-item>
+
+        <md-subheader class="md-no-sticky">Bible</md-subheader>
+        <md-list-item class="md-primary" href="/bible">
           <md-icon md-svg-icon="grid"></md-icon>
           <p> All Books </p>
         </md-list-item>
         <md-list-item ng-click="navigateTo(albums, $event)">
-          <md-icon md-svg-icon="favorite"></md-icon>
-          <p> Favorited Verses </p>
-        </md-list-item>
-        <md-list-item ng-click="navigateTo(albums, $event)">
           <md-icon md-svg-icon="playlist"></md-icon>
-          <p> My Verse Collections </p>
-        </md-list-item>
-        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
-          <md-icon md-svg-icon="save"></md-icon>
-          <p> My Highlighted Verses</p>
-        </md-list-item>
-        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
-          <md-icon md-svg-icon="eq"></md-icon>
-          <p> Bible Stories</p>
-        </md-list-item>
-        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
-          <md-icon md-svg-icon="person_outline"></md-icon>
-          <p> My Resolutions </p>
-        </md-list-item>
-        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
-          <md-icon md-svg-icon="replay"></md-icon>
-          <p> History </p>
+          <p> Verse Collections </p>
         </md-list-item>
 
-        <md-subheader>Discover</md-subheader>
-        <md-list-item class="md-primary" ng-click="navigateTo(home, $event)">
-          <md-icon md-svg-icon="rate"></md-icon>
-          <p> Famous / Relevant Verses </p>
-        </md-list-item>
-        <md-list-item ng-click="navigateTo(albums, $event)">
-          <md-icon md-svg-icon="people_outline"></md-icon>
-          <p> Podcasts </p>
-        </md-list-item>
-        <md-list-item ng-click="navigateTo(albums, $event)">
-          <md-icon md-svg-icon="playlist"></md-icon>
-          <p> Daily Word Services </p>
-        </md-list-item>
-
-        <md-divider></md-divider>
+        <md-divider class="md-no-sticky"></md-divider>
         <md-subheader>Settings</md-subheader>
         <md-list-item>
-          <md-icon md-svg-icon="fullscreen"></md-icon>
-          <p> Turn Fullscreen {{onfullscreen ? 'off' : 'on' }} </p>
+          <md-icon md-svg-icon="{{onfullscreen ? 'fullscreen' : 'fullscreen_exit'}}"></md-icon>
+          <p> Fullscreen {{onfullscreen ? 'On' : 'off' }} </p>
           <md-switch class="md-secondary md-primary" ng-model="onfullscreen" ng-change="goFullscreen()"></md-switch>
         </md-list-item>
         <md-list-item>
-          <md-icon md-svg-icon="volume_up"></md-icon>
-          <p> Turn Voice {{onfullscreen ? 'off' : 'on' }} </p>
-          <md-switch class="md-secondary md-primary" ng-model="voice" ng-chang="allowVoice()"></md-switch>
+          <md-icon md-svg-icon="{{voice ? 'mic' : 'mic_off'}}"></md-icon>
+          <p> Voice {{voice ? 'On' : 'Off' }} </p>
+          <md-switch class="md-secondary md-primary" ng-model="voice"></md-switch>
         </md-list-item>
         <md-list-item>
-          <md-icon md-svg-icon="fullscreen"></md-icon>
-          <p> Turn screen reader {{onfullscreen ? 'off' : 'on' }} </p>
-          <md-switch class="md-secondary md-primary" ng-model="voice" ng-chang="allowVoice()"></md-switch>
+          <md-icon md-svg-icon="reader"></md-icon>
+          <p> Screen reader {{reader ? 'On' : 'Off' }} </p>
+          <md-switch class="md-secondary md-primary" ng-model="reader"></md-switch>
         </md-list-item>
       </md-list>
     </md-content>
   </md-sidenav>
-  <div id="main" layout="column" class="relative" layout-fill role="main" ui-view>
-    
+  <div id="main" layout="column" class="relative" layout-fill role="main">
+    <md-toolbar class="md-whiteframe-z2" ng-style="{'background': searching ? 'transparent' : ''}">
+      <div class="md-toolbar-tools">
+        <span ng-hide="searching">
+          <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu" class="md-icon-button">
+            <md-icon md-svg-icon="menu_white"></md-icon>
+          </md-button>
+          {{pageTitle}}
+        </span>
+        <span flex ng-hide="searching"></span>
+        <div flex ng-show="searching">
+                <md-input-container md-no-float>
+                  <label>&nbsp;</label>
+                  <input autofocus="true" id="search-box" ng-model="search.query" type="text" placeholder="type to search....">
+                </md-input-container>
+            </div>
+            <md-button aria-label="Search" ng-click="toggleSearching()" class="md-icon-button">
+          <md-icon md-svg-icon="cancel" ng-if="searching"></md-icon>
+          <md-icon md-svg-icon="search_white" ng-if="!searching"></md-icon>
+        </md-button>
+        <md-button aria-label="Search" class="md-icon-button" ng-hide="searching">
+          <md-icon md-svg-icon="more_vert_white"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content layout="row" flex ui-view></md-content>
   </div>
   <!-- Angular Material Dependencies -->
   <script src="assets/js/lib/angular.min.js"></script>
@@ -111,12 +115,6 @@
   <script src="assets/js/app.js"></script>
   <script src="assets/js/controllers.js"></script>
   <script src="assets/js/services.js"></script>
-  <script>
-    $(document).ready(function(){
-      // var container = '<div id="main" layout="column" class="relative" layout-fill role="main" ui-view></div>';
-      // $('body').delay(500).append(container);
-    });
-  </script>
 </body>
 
 </html>

@@ -1,13 +1,6 @@
 var app = angular.module('buddybible.controllers', []);
 
-app.controller('AppCtrl', function($scope, $sce, $mdMedia, Fullscreen, $location, $interval, $mdBottomSheet, $mdSidenav, $mdDialog, $http, books) {
-  $scope.books        =  books.all();
-  $scope.selectedBook =  {};
-  $scope.selectedBook.name     = 'Genesis';
-  $scope.selectedBook.chapters = books.getChapters('Genesis');
-  $scope.verseIndex = 0;
-  $scope.bookSorts = [{testament : ''}, {testament : 'Old'},{testament : 'New'}];
-
+app.controller('MainCtrl', function($scope, $mdMedia, Fullscreen, $mdSidenav) {
   // SCREEN SIZE VARIABLES
   $scope.screenIsSm   = $mdMedia('sm');
   $scope.screenIsMd   = $mdMedia('md');
@@ -18,53 +11,9 @@ app.controller('AppCtrl', function($scope, $sce, $mdMedia, Fullscreen, $location
     // alert('now on big screen');
   });
 
-  $scope.viewBook = function(book){
-    // if(!$scope.selectedBook.name === book){
-      $scope.selectedBook.name     = book;
-      $scope.selectedBook.chapters = books.getChapters(book);
-      $scope.verseIndex = 0;
-    // }
-  }
-
-  $scope.setChapter = function(index){
-    $scope.chapters.selectedIndex = index;
-  }
-
-  $scope.nextVerse = function(){
-    if($scope.verseIndex === $scope.selectedBook.chapters.length)
-      return false
-    else
-      parseFloat($scope.verseIndex +=1);
-  }
-
-  $scope.prevVerse = function(){
-    if($scope.verseIndex === 0)
-      return false
-    else
-      parseFloat($scope.verseIndex -=1);
-  }
-
-  $scope.showDtails = function(bookId){
-    for (var i = 0; i < $scope.books.length; i++) {
-      if($scope.books[i].id == bookId)
-        $scope.books[i].showingDetails = !$scope.books[i].showingDetails;
-      else
-        $scope.books[i].showingDetails = false;
-    }
-  }
-
-  $scope.quickSearch = function(entry) {
-    // IF THE USER'S ENTRY HAS NO SPACE YET SHOW MATCHING BOOK SHORTNAMES
-    if(!hasWhiteSpace(entry)){
-      // SHOW SHORT NAMES AS CHIPS
-    }else{
-      // SHOW CHAPTERS
-    }
-  }
-
   $scope.toggleSearching = function(){
-    $scope.searchChapter    =  {};
-    $scope.searchingChapter =  !$scope.searchingChapter;
+    $scope.search    =  {};
+    $scope.searching =  !$scope.searching;
   }
 
   // HIGHLIGHTING AN ITEM (FOR LAGE SCREENS ONLY)
@@ -92,6 +41,61 @@ app.controller('AppCtrl', function($scope, $sce, $mdMedia, Fullscreen, $location
   }
 });
 
+app.controller('bibleCtrl', bibleCtrl);
+  function bibleCtrl(books, $scope, $sce){
+    $scope.pageTitle = 'Bible(KJv)';
+    $scope.books        =  books.all();
+    $scope.selectedBook =  {};
+    $scope.selectedBook.name     = 'Genesis';
+    $scope.selectedBook.chapters = books.getChapters('Genesis');
+    $scope.chapters = $scope.selectedBook.chapters;
+    $scope.chapters.selectedIndex = 0;
+    $scope.verseIndex = 0;
+    $scope.bookSorts = [{testament : ''}, {testament : 'Old'},{testament : 'New'}];
+    
+    $scope.viewBook = function(book){      
+      $scope.selectedBook.name     = book;
+      $scope.selectedBook.chapters = books.getChapters(book);
+      $scope.chapters.selectedIndex = 0;
+      $scope.verseIndex = 0;
+    }
+
+    $scope.setChapter = function(index){
+      $scope.chapters.selectedIndex = index;
+    }
+
+    $scope.nextVerse = function(){
+      if($scope.verseIndex === $scope.selectedBook.chapters.length)
+        return false
+      else
+        parseFloat($scope.verseIndex +=1);
+    }
+
+    $scope.prevVerse = function(){
+      if($scope.verseIndex === 0)
+        return false
+      else
+        parseFloat($scope.verseIndex -=1);
+    }
+
+    $scope.showDtails = function(bookId){
+      for (var i = 0; i < $scope.books.length; i++) {
+        if($scope.books[i].id == bookId)
+          $scope.books[i].showingDetails = !$scope.books[i].showingDetails;
+        else
+          $scope.books[i].showingDetails = false;
+      }
+    }
+
+    $scope.quickSearch = function(entry) {
+      // IF THE USER'S ENTRY HAS NO SPACE YET SHOW MATCHING BOOK SHORTNAMES
+      if(!hasWhiteSpace(entry)){
+        // SHOW SHORT NAMES AS CHIPS
+      }else{
+        // SHOW CHAPTERS
+      }
+    }
+  }
 app.controller('bookTagsCtrl', DemoCtrl);
   function DemoCtrl ($timeout, $q, $scope) {
     var self = this;
@@ -123,6 +127,21 @@ app.controller('bookTagsCtrl', DemoCtrl);
         return bk;
       });
     }
+}
+
+app.controller('collectionsCtrl', collectionsCtrl);
+  function collectionsCtrl(books, $scope){
+    $scope.pageTitle = 'My Verse Collections';
+  }
+
+app.controller('subscriptionsCtrl', subscriptionsCtrl);
+  function subscriptionsCtrl(books, $scope){
+    $scope.pageTitle = 'My Subscriptions';
+  }
+
+app.controller('resolutionsCtrl', resolutionsCtrl);
+  function resolutionsCtrl(books, $scope){
+    $scope.pageTitle = 'My Resolutions';
   }
 
 app.controller('fabdialCtrl', function($mdDialog) {
@@ -132,7 +151,7 @@ app.controller('fabdialCtrl', function($mdDialog) {
     $mdDialog.show({
       clickOutsideToClose: true,
       parent: angular.element(document.querySelector('#verseStuff')),
-      controller: function($mdDialog) {
+      controller: function($mdDialog, $scope) {
         // Save the clicked item
         this.action = action;
         this.collections = [
