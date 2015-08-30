@@ -18,7 +18,9 @@ html, body {
 *:active{
   box-shadow: none;
 }
-
+.selected{
+  background: red !important;
+}
 .md-content{
   background-color: #eee !important;
 }
@@ -236,3 +238,17 @@ span.name {
   background-color: #aaa; }
 .fabSpeedDialdemoMoreOptions md-content div[flex="50"] {
   padding: 15px; }
+
+.animated-class.ng-hide-add, .animated-class.ng-hide-remove.ng-hide-remove-active{
+  -webkit-animation: fadeInUp 1s;
+  -moz-animation: fadeInUp 1s;
+  -o-animation: fadeInUp 1s;
+  animation: fadeInUp 1s;
+}
+
+.animated-class.ng-hide-remove, .animated-class.ng-hide-add.ng-hide-add-active{
+  -webkit-animation: fadeOutRightBig 0.4s;
+  -moz-animation: fadeOutRightBig 0.4s;
+  -o-animation: fadeOutRightBig 0.4s;
+  animation: fadeOutRightBig 0.4s;
+}

@@ -9,9 +9,9 @@
         <md-tab id="tab3" aria-controls="tab3-content">
           New Tst
         </md-tab>
-        <md-tab id="tab3" aria-controls="tab4-content">
+        <!-- <md-tab id="tab3" aria-controls="tab4-content">
           Search
-        </md-tab>
+        </md-tab> -->
     </md-tabs>
     <div ng-controller="bookTagsCtrl as ctrl" layout="column" flex ng-show="books.sortIndex === 3">
     	<md-divider></md-divider>
@@ -28,7 +28,7 @@
 	    </md-chips>
     </div>
 	<md-divider></md-divider>
-	<md-content flex md-scroll-y>
+	<md-content flex md-scroll-y class="scrollme" ng-scrollba>
 		<md-list-item class="md-2-line" ng-repeat="book in books | filter:bookSorts[books.sortIndex]" ng-click="viewBook(book.name)">
 			<md-divider></md-divider>
 			<!-- <md-icon md-svg-icon="" ng-if="$index === 0"></md-icon> -->
@@ -37,7 +37,7 @@
 					<span hide-gt-md style="text-align:center">{{book.shortname}}</span>
 					<span hide show-gt-md>{{book.name}}</span>				
 				</h3>
-			  	<p hide show-gt-md> <i>chapters:</i> 5, writer: moses </p>
+			  	<!-- <p hide show-gt-md> <i>chapters:</i> 5, writer: moses </p> -->
 			</div>
 		</md-list-item>
 	</md-content>
@@ -64,7 +64,7 @@
 	    		</md-list-item>
 	    	</md-content>
 		    <md-content layout="column" flex style="padding:10px">
-			    <div ng-if="showVerses">
+			    <div ng-show="showVerses" class="animated-class">
 			    	<br>
 			    	<div class="md-toolbar-tools" ng-show="showVerses" flex>
 				    	<div flex></div>
@@ -77,7 +77,7 @@
 				    </div>
 				    <br>
 			    	<md-list-item style="font-size:25px">
-		    			{{selectedBook.chapters[chapters.selectedIndex].verses[verseIndex][verseIndex + 1]}}
+		    			{{chapters[chapters.selectedIndex].verses[verseIndex][verseIndex + 1]}}
 		    		</md-list-item>
 		    		<br><br><br>
 
@@ -87,19 +87,24 @@
 		    			Verse Details and sundry
 		    		</md-content>
 			    </div>
-		    	<span ng-bind-html="to_trusted(selectedBook.chapters[chapters.selectedIndex].stringVerses)" ng-if="!showVerses"></span>
+		    	<div ng-bind-html="to_trusted(chapters[chapters.selectedIndex].stringVerses)" ng-show="!showVerses" class="animated-class">
+		    	</div>
 	    	</md-content>
 
 	    	<div class="lock-size" ng-controller="fabdialCtrl as demo">
 				<md-fab-speed-dial ng-if="showVerses" md-direction="up" class="md-fling md-fab-bottom-righ">
 			        <md-fab-trigger>
-						<md-button aria-label="menu" class="md-fab md-primary" ng-click="demo.openDialog($event, 'add')">
-							<md-tooltip md-direction="left" class="md-primary">Menu</md-tooltip>
+						<md-button aria-label="menu" class="md-fab m-primary" ng-click="demo.openDialog($event, 'add')">
+							<md-tooltip md-direction="left">Menu</md-tooltip>
 							<md-icon md-svg-icon="add_white"></md-icon>
 						</md-button>
 			        </md-fab-trigger>
 			        
 			        <md-fab-actions>
+			        	<md-button aria-label="Highlight" class="md-fab md-raised md-mini" ng-click="demo.openDialog($event, 'highlight')">
+						  <md-tooltip md-direction="left">Highlight</md-tooltip>
+						  <md-icon md-svg-icon="colorize"></md-icon>
+						</md-button>
 						<md-button aria-label="Share" class="md-fab md-raised md-mini" ng-click="demo.openDialog($event, 'share')">
 						  <md-tooltip md-direction="left" class="md-primary">Share</md-tooltip>
 						  <md-icon md-svg-icon="share"></md-icon>
@@ -116,11 +121,11 @@
 			    <md-dialog>
 				    <md-dialog-content>
 				      	<div ng-if="dialog.action === 'share'">
-				      		<p> Share On: 
+				      		Share On: 
 					      		<md-button class="md-primary md-flat" md-theme="{{ shareTheme }}" md-theme-watch>
-					      			{{ share.option }}
+					      			{{ share.option || '&nbsp;'}}
 					      		</md-button> 
-					      	</p>
+					      	
 						    <md-radio-group ng-model="share.option" ng-change="shareTheme = share.option.toLowerCase()">
 						    	<md-radio-button value="Facebook" class="md-primary" md-theme="facebook">Facebook</md-radio-button>
 						      	<md-radio-button value="Twitter"  class="md-primary" md-theme="twitter">Twitter </md-radio-button>
@@ -132,6 +137,20 @@
 			      			<md-button class="md-primary md-flat" ng-click="verseFavd = !verseFavd">
 			      			 {{verseFavd ? 'Add' : 'Remove'}}
 			      			</md-button> 
+				      	</div>
+				      	<div ng-if="dialog.action === 'highlight'">
+				      		<h3>Pick Highlight colour</h3>
+				      		<md-divider></md-divider>
+				      		<div class="row">
+				      			<md-button class="md-primary md-fab md-mini" ng-click="val" md-theme="light-green"></md-button> 
+				      			<md-button class="md-primary md-fab md-mini" ng-click="val" md-theme="orange"></md-button>
+				      			<md-button class="md-primary md-fab md-mini" ng-click="val" md-theme="twitter"></md-button> 
+				      		</div>
+				      		<div class="row">
+				      			<md-button class="md-primary md-fab md-mini" ng-click="val" md-theme="lime"></md-button> 
+				      			<md-button class="md-primary md-fab md-mini" ng-click="val" md-theme="teal"></md-button>
+				      			<md-button class="md-primary md-fab md-mini" ng-click="val" md-theme="pink"></md-button>
+				      		</div>
 				      	</div>
 				      	<div ng-if="dialog.action === 'add'">
 				      		<div ng-show="!dialog.addingnewcollection">
@@ -153,13 +172,14 @@
 						            </md-input-container>
 					      		</div>
 					      		<md-button class="md-icon-button" md-theme="success" ng-click="dialog.addToCollection(newcol)">
-					      			<md-icon md-svg-icon="check"></md-icon>
+					      			<md-icon md-svg-icon="check_success"></md-icon>
 					      		</md-button>
 					      		<md-button class="md-icon-button" md-theme="google" ng-click="dialog.addingnewcollection = false">
 					      			<md-icon md-svg-icon="cancel"></md-icon>
 					      		</md-button>
 				      		</div>
 				      	</div>
+				      	<md-divider></md-divider>
 			  		</md-dialog-content>
 			  		<div class="md-actions">
 				        <md-button aria-label="Close dialog" ng-click="dialog.close()" class="md-flat">

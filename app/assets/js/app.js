@@ -1,4 +1,4 @@
-var app = angular.module('buddybible', ['buddybible.services','buddybible.controllers', 'ngMaterial', 'ngMdIcons','mb-adaptive-backgrounds', 'ui.router', 'FBAngular'])
+var app = angular.module('buddybible', ['buddybible.services','buddybible.controllers','ngAnimate','ngScrollbar', 'ngMaterial', 'mb-adaptive-backgrounds', 'ui.router', 'FBAngular'])
 
 app.config(function($mdIconProvider, $stateProvider, $urlRouterProvider) {
   
@@ -11,7 +11,7 @@ app.config(function($mdIconProvider, $stateProvider, $urlRouterProvider) {
       .icon("back"       , "./assets/svg/ic_arrow_back.svg"                  , 24)
       .icon("cancel"       , "./assets/svg/ic_clear.svg"                  , 24)
       .icon("cast"       , "./assets/svg/ic_cast.svg"                  , 24)
-      .icon("check"       , "./assets/svg/ic_check.svg"                  , 24)
+      .icon("check_success"       , "./assets/svg/ic_check_circle_success.svg", 24)
       .icon("colorize"       , "./assets/svg/ic_colorize.svg"           , 24)
       .icon("edit"       , "./assets/svg/ic_edit.svg"                  , 24)
       .icon("eq"       , "./assets/svg/ic_hearing.svg"                  , 24)
@@ -54,7 +54,7 @@ app.config(function($mdIconProvider, $stateProvider, $urlRouterProvider) {
       .icon("search"       , "./assets/svg/ic_search.svg"      , 24)
       .icon("search_white"       , "./assets/svg/ic_search_white.svg" , 24)
       .icon("settings"      , "./assets/svg/ic_settings.svg"        , 24)
-      .icon("share"      , "./assets/svg/share.svg"                 , 24)
+      .icon("share"      , "./assets/svg/ic_share_black.svg"                 , 24)
       .icon("share_white"      , "./assets/svg/ic_share_white.svg"                 , 24)
       .icon("shuffle"       , "./assets/svg/ic_shuffle.svg"                  , 24)
       .icon("stories"       , "./assets/svg/ic_stories.svg"       , 24)
@@ -102,6 +102,21 @@ app.config(function($mdThemingProvider) {
           .primaryPalette('purple')
           .accentPalette('orange')
           .warnPalette('light-green')
+
+    $mdThemingProvider.theme('light-green')
+          .primaryPalette('light-green')
+
+    $mdThemingProvider.theme('orange')
+          .primaryPalette('orange')
+
+    $mdThemingProvider.theme('teal')
+          .primaryPalette('teal')
+
+    $mdThemingProvider.theme('pink')
+          .primaryPalette('pink')
+
+    $mdThemingProvider.theme('lime')
+          .primaryPalette('lime')
 
     $mdThemingProvider.theme('facebook')
           .primaryPalette('indigo')

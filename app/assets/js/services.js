@@ -1,5 +1,14 @@
 angular.module('buddybible.services', [])
 
+.factory('Page', function () {
+        var title = '';
+
+        return {
+           title: function() { return title; },
+           setTitle: function(newTitle) { title = newTitle }
+        };
+    })
+
 // A RESTful factory for retrieving contacts from 'contacts.json'
 .factory('books', ['$http', function ($http) {
   
@@ -78,8 +87,10 @@ angular.module('buddybible.services', [])
           chapter = {
             id           : parseFloat(i + 1),
             verses       : data[i].verses,
-            stringVerses : VerseString(data[i].verses)
+            stringVerses : VerseString(data[i].verses),
+            verseCount   : data[i].verses.length
           }
+          console.log(chapter);
           chapters.push(chapter);
         };
       });

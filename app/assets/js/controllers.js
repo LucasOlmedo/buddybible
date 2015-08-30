@@ -1,6 +1,6 @@
 var app = angular.module('buddybible.controllers', []);
 
-app.controller('MainCtrl', function($scope, $mdMedia, Fullscreen, $mdSidenav) {
+app.controller('MainCtrl', function($scope, $mdMedia, Fullscreen, $mdSidenav, $location) {
   // SCREEN SIZE VARIABLES
   $scope.screenIsSm   = $mdMedia('sm');
   $scope.screenIsMd   = $mdMedia('md');
@@ -9,7 +9,11 @@ app.controller('MainCtrl', function($scope, $mdMedia, Fullscreen, $mdSidenav) {
   $scope.screenIsGSm  = $mdMedia('gt-md');
   $scope.$watch(function() { return $mdMedia('sm'); }, function(big) {
     // alert('now on big screen');
-  });
+  });  
+
+  $scope.whatsActve = function(isItMe){
+     return (isItMe === $location.path()) ? true : false ;
+  }  
 
   $scope.toggleSearching = function(){
     $scope.search    =  {};
@@ -39,11 +43,16 @@ app.controller('MainCtrl', function($scope, $mdMedia, Fullscreen, $mdSidenav) {
   $scope.toggleSidenav = function(side){
     $mdSidenav(side).toggle();
   }
+
+  $scope.navigateTo = function(path, title){
+    $location.path(path);
+  }
 });
 
 app.controller('bibleCtrl', bibleCtrl);
-  function bibleCtrl(books, $scope, $sce){
-    $scope.pageTitle = 'Bible(KJv)';
+  function bibleCtrl(books, $scope, $sce, Page){
+    Page.setTitle('Bible');
+    
     $scope.books        =  books.all();
     $scope.selectedBook =  {};
     $scope.selectedBook.name     = 'Genesis';
@@ -60,19 +69,25 @@ app.controller('bibleCtrl', bibleCtrl);
       $scope.verseIndex = 0;
     }
 
+    $scope.to_trusted = function(html_code) {
+      return $sce.trustAsHtml(html_code);
+    }
+
     $scope.setChapter = function(index){
       $scope.chapters.selectedIndex = index;
     }
 
     $scope.nextVerse = function(){
-      if($scope.verseIndex === $scope.selectedBook.chapters.length)
+      verses = $scope.chapters[$scope.chapters.selectedIndex].verseCount;
+
+      if($scope.verseIndex > (verses - 2))
         return false
       else
         parseFloat($scope.verseIndex +=1);
     }
 
     $scope.prevVerse = function(){
-      if($scope.verseIndex === 0)
+      if($scope.verseIndex <= 0)
         return false
       else
         parseFloat($scope.verseIndex -=1);
@@ -130,18 +145,25 @@ app.controller('bookTagsCtrl', DemoCtrl);
 }
 
 app.controller('collectionsCtrl', collectionsCtrl);
-  function collectionsCtrl(books, $scope){
-    $scope.pageTitle = 'My Verse Collections';
+  function collectionsCtrl(books, $scope, Page){
+    Page.setTitle('My Verse Collections');
   }
 
 app.controller('subscriptionsCtrl', subscriptionsCtrl);
-  function subscriptionsCtrl(books, $scope){
-    $scope.pageTitle = 'My Subscriptions';
+  function subscriptionsCtrl(books, $scope, Page){
+    Page.setTitle('My Subscriptions');
   }
 
 app.controller('resolutionsCtrl', resolutionsCtrl);
-  function resolutionsCtrl(books, $scope){
-    $scope.pageTitle = 'My Resolutions';
+  function resolutionsCtrl(books, $scope, Page){
+    Page.setTitle('My Resolutions');
+
+    $scope.resolutions = [
+      {name: "Read Whole Bible", description: "Read the whole bible in two months only", complete : false},
+      {name: "Cram Bible Verses", description: "Cram three new bible verses everyday for a month", complete : false},
+      {name: "Paul's Adventures", description: "Read and learn about all of St. Paul's Adventures", complete : true},
+    ];
+    $scope.resSorts = [{complete : ''}, {complete : true},{complete : false}, {suggested: true}];
   }
 
 app.controller('fabdialCtrl', function($mdDialog) {

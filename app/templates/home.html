@@ -1,10 +1,55 @@
-<md-toolbar class="md-whiteframe-z2" hide-gt-md>
-	<div class="md-toolbar-tools">
-		<md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu" class="md-control trans">
-		  <md-icon md-svg-icon="menu_white"></md-icon>
-		</md-button>
-	</div>
-</md-toolbar>
-<md-content layout="row" flex>
-	home page
-</md-content>
+<div layout="column" flex hide show-gt-sm>
+	<md-content flex md-scroll-y>
+		<div layout="column" layout-gt-md="row">
+			<md-card flex="50">
+				<md-card-content>
+					<h3 class="title">My Collections</h3>
+					<md-list-item class="md-3-line">
+						<md-icon md-svg-icon="favorite"></md-icon>
+						<div class="md-list-item-text">
+							<h3> Favorited Verses </h3>
+						  	<p> Verses you liked </p>
+						</div>
+					</md-list-item>
+					<md-divider></md-divider>
+					<md-list-item class="md-3-line">
+						<md-icon md-svg-icon="highlight"></md-icon>
+						<div class="md-list-item-text">
+							<h3> Highlighted Verses </h3>
+						  	<p> Verses you highlighted with their colours </p>
+						</div>
+					</md-list-item>
+				</md-card-content>
+			</md-card>
+
+			<md-card flex="50">
+				<md-card-content>
+					<h3 class="title">My Resolutions</h3>
+					<md-list-item class="md-3-line">
+						<md-icon md-svg-icon="favorite"></md-icon>
+						<div class="md-list-item-text">
+							<h3> Read the bible in a month </h3>
+						  	<p> You are behind by two days :-( </p>
+						</div>
+					</md-list-item>
+				</md-card-content>
+			</md-card>
+		</div>
+	</md-content>
+</div>
+
+<div flex="40" layout="column" class="md-whiteframe-z2" style="margin-left:10px;">
+	<div class="md-toolbar-tools" flex>
+		<h3 class="title">Notification List</h3>
+    </div>
+	<md-content>
+		<md-divider></md-divider>
+		<md-list-item class="md-3-line" ng-click="do">
+			<div class="md-list-item-text">
+				<h3 class="title"> Notification 1 </h3>
+			  	<p> <i>Notification details</i> </p>
+			</div>
+		</md-list-item>
+		<md-divider></md-divider>
+	</md-content>
+</div>

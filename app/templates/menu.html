@@ -1,17 +1,4 @@
-<html lang="en" ng-app="buddybible">
-
-<head>
-  <title>Buddy Bible</title>
-  <!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'> -->
-  <link rel="stylesheet" href="assets/css/angular-material.min.css"/>
-  <link rel="stylesheet" href="assets/css/ng-scrollbar.min.css"/>
-  <link rel="stylesheet" href="assets/css/animate.css"/>
-  <link rel="stylesheet" href="assets/css/app.css"/>
-  <link rel="icon" href="favicon.ico">
-</head>
-
-<body layout="row" ng-controller="MainCtrl">
-  <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
     <md-toolbar class="md-tall md-hue-" styl="background:url('assets/logosvg.svg');background-position:center;background-size:cover;">
       <span flex></span>
       <md-list-item class="md-1-lin">
@@ -25,40 +12,29 @@
     <md-content flex i="content" class="md-primary">
       <span flex></span>
       <md-divider></md-divider>
-      <md-list class="main-menu">
+      <md-list>
         <md-subheader class="md-no-sticky">Main</md-subheader>
-        <md-list-item class="md-primary selected" ng-click="navigateTo('/')" ng-class="{active : whatsActve('/')}">
+        <md-list-item class="md-primary" ng-click="navigateTo('/')">
           <md-icon md-svg-icon="home"></md-icon>
-          <p> 
-            Home
-            <span ng-if="whatsActve('/')" style="color:purple">active</span>
-          </p>
+          <p> Home </p>
         </md-list-item>
         <md-list-item class="md-primary" ng-click="navigateTo('resolutions')">
           <md-icon md-svg-icon="person_outline"></md-icon>
-          <p> My Resolutions 
-            <span ng-if="whatsActve('/resolutions')" style="color:purple">active</span>
-          </p>
+          <p> My Resolutions </p>
         </md-list-item>
         <md-list-item ng-click="navigateTo('subscriptions')">
           <md-icon md-svg-icon="playlist"></md-icon>
-          <p> Subscriptions
-            <span ng-if="whatsActve('/subscriptions')" style="color:purple">active</span>
-          </p>
+          <p> Subscriptions </p>
         </md-list-item>
 
         <md-subheader class="md-no-sticky">Bible</md-subheader>
         <md-list-item class="md-primary" ng-click="navigateTo('bible')">
           <md-icon md-svg-icon="grid"></md-icon>
-          <p> All Books 
-            <span ng-if="whatsActve('/bible')" style="color:purple">active</span>
-          </p>
+          <p> All Books </p>
         </md-list-item>
         <md-list-item ng-click="navigateTo('collections')">
           <md-icon md-svg-icon="playlist"></md-icon>
-          <p> Verse Collections
-            <span ng-if="whatsActve('/collections')" style="color:purple">active</span>
-          </p>
+          <p> Verse Collections </p>
         </md-list-item>
 
         <md-divider class="md-no-sticky"></md-divider>
@@ -108,27 +84,3 @@
     </md-toolbar>
     <md-content layout="row" flex ui-view></md-content>
   </div>
-  <!-- Angular Material Dependencies -->
-  <script src="assets/js/lib/angular.min.js"></script>
-  <script src="assets/js/lib/angular-animate.min.js"></script>
-  <script src="assets/js/lib/angular-aria.min.js"></script>
-  <script src="assets/js/lib/angular-material.min.js"></script>
-  <script src="assets/js/lib/angular-ui-router.js"></script>
-  <script src="assets/js/lib/angular-adaptive-backgrounds.min.js"></script>
-  <script src="assets/js/lib/jquery-1.11.1.js"></script>
-  <script src="assets/js/lib/angular-fullscreen.js"></script>
-  <script src="assets/js/lib/plangular.min.js"></script>
-  <script src="assets/js/lib/ng-scrollbar.min.js"></script>
-
-  <script src="assets/js/lib/angular-material-icons-0.4.0.min.js"></script>
-  
-  <!-- CDNS
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="http://d2v52k3cl9vedd.cloudfront.net/plangular/3.1.0/plangular.min.js"></script>
-  -->
-  <script src="assets/js/app.js"></script>
-  <script src="assets/js/controllers.js"></script>
-  <script src="assets/js/services.js"></script>
-</body>
-
-</html>
