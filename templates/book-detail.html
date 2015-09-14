@@ -1,0 +1,7 @@
+<ion-view view-title="{{book.name}} {{selectedchapter + 1}}">
+    <ion-content class="padding" ng-class="{expanded:isExpanded}" style="padding-top:124px;">
+        <div ng-bind-html="to_trusted(chapters[selectedchapter].stringVerses)"></div>
+    </ion-content>
+</ion-view>
+
+

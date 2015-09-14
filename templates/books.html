@@ -1,0 +1,21 @@
+<ion-view view-title="Books">
+    <ion-content ng-class="{expanded:isExpanded}" style="padding-top:24px;">
+        <ion-list clas="animate-fade-slide-in-right">
+          <ion-item class="item-avatar item-remove-animate item-icon-right" ng-repeat="book in books" type="item-text-wrap" href="#/app/books/{{book.id}}">
+            <!-- <img ng-src="img/crown.jpg">{{book.shortname}} -->
+            <span class="avatar" style="text-align:center;padding-top:10px;height:40px;width:40px;" ng-class="book.theme">
+              {{book.shortname}}
+            </span>
+            <h2>{{book.name}}</h2>
+            <p>{{book.testament}} Testament</p>
+            <!-- <i class="icon ion-chevron-right icon-accessory"></i> -->
+
+            <ion-option-button class="button-assertive" ng-click="remove(book)">
+              Delete
+            </ion-option-button>
+          </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
+
+

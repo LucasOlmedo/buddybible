@@ -1,0 +1,123 @@
+/* General
+==================================*/
+h1 {
+    color: #fff;
+    text-shadow: 0 1px 0px #000;
+    font-size: 42px;
+}
+
+
+/* Utilities
+==================================*/
+.title-bordered {
+    border-top: solid 2px #bbb;
+    padding-top: 30px;
+}
+
+p {
+    color: #555;
+    margin: 0 0 25px;
+}
+
+.scroll {
+    height: 100%;
+}
+
+
+/* Menu
+==================================*/
+.bar-custom .bar-header{
+  line-height: -40px;
+  min-height: 54px;background: #9C27B0;
+  color: #fefefe;
+}
+.bar-custom .title{
+    height: 54px;
+    font-size: 20px;
+    margin-top: 8px;
+}
+.bar-custom .buttons button{
+    /*height: 54px;*/
+    font-size: 50px;
+    margin-top: 4px;
+    /*background: green;*/
+}
+.menu .bar.bar-header.expanded {
+    transition: all .5s ease-in-out;
+}
+
+.menu-open .bar.bar-header.expanded {
+    background-color: #222;
+}
+
+.menu h2 {
+    bottom: 0;
+    font-size: 18px;
+    left: 16px;
+    position: absolute;
+}
+
+.menu .avatar {
+    height: 88px;
+    width: 88px;
+}
+
+.menu.menu-left * {
+    font-weight: bold;
+}
+
+.menu-open .ion-navicon {
+    transform: rotate(-360deg);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-open .ion-navicon:before {
+    content: "\f2ca";
+}
+
+
+/* Login
+==================================*/
+.app-icon {
+    background-color: #fff;
+    background: url('../img/crown.jpg') center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 125px;
+    margin: 0 auto;
+    width: 125px;
+}
+
+.social-login {
+    position: fixed;
+    bottom: 0;
+}
+
+.popover{
+    height: auto !important;
+    width:250px;
+    min-height: 250px;
+}
+
+
+/*THEMES*/
+.purple{background: #9C27B0;color: #F2E3F5;}.purple.inactive{color: #DFBBE5;}
+.pink{background-color: #E91E63;color: #fff;}.pink.inactive{color: #F7B4CB;}
+.red{background-color: #F44336;color: #fff;}.red.inactive{color: #FFCCD0;}
+.blue{background-color: #2196F3;color: #fff;}.blue.inactive{color: #AFD8FA;}
+.light-blue{background-color: #03A9F4;color: #000;}.light-blue.inactive{color: #AAE2FB;}
+.green{background-color: #4CAF50;color: #fff;}.green.inactive{color: #BBE0BC;}
+.light-green{background-color: #8BC34A;color: #000;}.light-green.inactive{color: #D3E9BA;}
+.yellow{background-color: #FFEB3B;color: #000;}.yellow.inactive{color: #FFF9C4;}
+.lime{background-color: #CDDC39;color: #000;}.lime.inactive{color: #ECF1B4;}
+.amber{background-color: #FFC107;color: #000;}.amber.inactive{color: #FFECB3;}
+.teal{background-color: #009688;color: #fff;}.teal.inactive{color: #A4D9D4;}
+.deep-purple.inactive{color: #C3B2E2;}.deep-purple{background-color: #673AB7;color: #EBE5F6;}
+.indigo{background-color: #3F51B5;color: #E6E8F6;}.indigo.inactive{color: #C5CAE9;}
+.cyan{background-color: #00BCD4;color: #F9FEFE;}.cyan.inactive{color: #9CE5EE;}
+.orange{background-color: #FF9800;color: #211400;}.orange.inactive{color: #FFD494;}
+.deep-orange{background-color: #FF5722;color: #FFF3EF;}.deep-orange.inactive{color: #FFC6B5;}
+.brown{background-color: #795548;color: #EEE9E7;}.brown.inactive{color: #D6CBC7;}
+.grey{background-color: #9E9E9E;color: #141414;}.grey.inactive{color: #F5F5F5;}
+.blue-grey{background-color: #9E9E9E;color: #fff;}.blue-grey.inactive{color: #CAD3D8;}
