@@ -90,7 +90,6 @@ angular.module('buddybible.services', [])
             stringVerses : VerseString(data[i].verses),
             verseCount   : data[i].verses.length
           }
-          console.log(chapter);
           chapters.push(chapter);
         };
       });
@@ -102,8 +101,8 @@ angular.module('buddybible.services', [])
   function VerseString(verses){
     string = '';
     for (var i = 0; i < verses.length; i++) {
-      string += '<div style="margin:5px"><strong><sup>'+[i+1]+'</sup></strong> ';
-      string += verses[i][i+1] +'</div><br/>';
+      string += '<div style="margin:5px"><md-button ng-click="verseClicked('+verses[i][i+1]+')"><strong><sup>'+[i+1]+'</sup></strong> ';
+      string += verses[i][i+1] +'</md-button></div><br/>';
     };
     return string;
   }

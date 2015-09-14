@@ -45,12 +45,13 @@ app.controller('MainCtrl', function($scope, $mdMedia, Fullscreen, $mdSidenav, $l
   }
 
   $scope.navigateTo = function(path, title){
+    $mdSidenav('left').toggle();
     $location.path(path);
   }
 });
 
 app.controller('bibleCtrl', bibleCtrl);
-  function bibleCtrl(books, $scope, $sce, Page){
+  function bibleCtrl(books, $scope, $sce, $mdDialog, $mdBottomSheet, $mdToast, $animate, Page){
     Page.setTitle('Bible');
     
     $scope.books        =  books.all();
@@ -61,12 +62,40 @@ app.controller('bibleCtrl', bibleCtrl);
     $scope.chapters.selectedIndex = 0;
     $scope.verseIndex = 0;
     $scope.bookSorts = [{testament : ''}, {testament : 'Old'},{testament : 'New'}];
+
+
+    $scope.showSimpleToast = function(message) {
+      $mdToast.show(
+        $mdToast.simple()
+          .content(message)
+          .position($scope.getToastPosition())
+          .hideDelay(3000)
+          .parent(angular.element(document.querySelector('#verseStuff')))
+      );
+    };
+
+    $scope.toastPosition = {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+    $scope.getToastPosition = function() {
+      return Object.keys($scope.toastPosition)
+        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .join(' ');
+    };
     
     $scope.viewBook = function(book){      
       $scope.selectedBook.name     = book;
       $scope.selectedBook.chapters = books.getChapters(book);
+      $scope.chapters = $scope.selectedBook.chapters;
       $scope.chapters.selectedIndex = 0;
       $scope.verseIndex = 0;
+    }
+
+    $scope.verseClicked = function(verse){
+      alert(verse);
     }
 
     $scope.to_trusted = function(html_code) {
@@ -75,20 +104,32 @@ app.controller('bibleCtrl', bibleCtrl);
 
     $scope.setChapter = function(index){
       $scope.chapters.selectedIndex = index;
+      $scope.verseIndex = 0;
     }
 
     $scope.nextVerse = function(){
       verses = $scope.chapters[$scope.chapters.selectedIndex].verseCount;
 
       if($scope.verseIndex > (verses - 2))
-        return false
+      {
+        if($scope.chapters.selectedIndex < $scope.selectedBook.chapters.length - 1 ){
+          $scope.setChapter($scope.chapters.selectedIndex + 1);
+        }else{
+          $scope.setChapter(0);
+        }
+      }
       else
         parseFloat($scope.verseIndex +=1);
     }
 
     $scope.prevVerse = function(){
-      if($scope.verseIndex <= 0)
-        return false
+      if($scope.verseIndex <= 0){
+        if($scope.chapters.selectedIndex > 0){
+          $scope.setChapter($scope.chapters.selectedIndex - 1);
+        }else{
+          $scope.setChapter($scope.chapters.length - 1);
+        }
+      }
       else
         parseFloat($scope.verseIndex -=1);
     }
@@ -109,6 +150,60 @@ app.controller('bibleCtrl', bibleCtrl);
       }else{
         // SHOW CHAPTERS
       }
+    }
+
+    $scope.favoriteVerse = function(){
+      $scope.showSimpleToast('Added to favorites.');
+    }
+
+    $scope.openDialog = function($event, action, $scope) {
+    // Show the dialog
+      $mdDialog.show({
+        clickOutsideToClose: true,
+        parent: angular.element(document.querySelector('#verseStuff')),
+        controller: function($mdDialog, $scope) {
+          // Save the clicked item
+          $scope.alert = '';
+          this.action = action;
+          this.collections = [
+            {name: 'Prophetic Scriptures'},
+            {name: 'Famous Stories'},
+          ];
+          $scope.highlightColours = ['#7FC846', '#FF9800', '#03A9F4', '#CDDC39', '#009688', '#E91E63'];
+          $scope.setHighlightColor = function (index) {
+            $scope.highlightColours.selected = index;
+            $scope.highlightColour = $scope.highlightColours[index];
+            $('#theVerse').css({background: $scope.highlightColour});
+          };
+          // Setup some handlers
+          this.close = function() {
+            $mdDialog.cancel();
+          };
+          this.submit = function() {
+            $mdDialog.hide();
+          };
+          this.addToCollection = function(val){
+            var collection = {};
+            collection.name = val;
+            this.collections.push(collection);
+            this.addingnewcollection = false;
+          };
+        },
+        controllerAs: 'dialog',
+        templateUrl: 'dialog.html',
+        targetEvent: $event
+      });
+    }
+
+    $scope.openBottomSheet = function($event, action, $scope) {
+      $mdBottomSheet.show({
+        parent: angular.element(document.querySelector('#verseStuff')),
+        templateUrl: './templates/bottomsheet-list.html',
+        controller: 'ListBottomSheetCtrl',
+        targetEvent: $event
+      }).then(function(clickedItem) {
+        alert('Sharing on: '+clickedItem.name);
+      });
     }
   }
 app.controller('bookTagsCtrl', DemoCtrl);
@@ -166,20 +261,37 @@ app.controller('resolutionsCtrl', resolutionsCtrl);
     $scope.resSorts = [{complete : ''}, {complete : true},{complete : false}, {suggested: true}];
   }
 
-app.controller('fabdialCtrl', function($mdDialog) {
+app.controller('fabdialCtrl', function($mdDialog, $timeout, $mdBottomSheet, $scope) {
   var self = this;
-  self.openDialog = function($event, action) {
+  self.openBottomSheet = function($event, action, $scope) {
+    $mdBottomSheet.show({
+      parent: angular.element(document.querySelector('#verseStuff')),
+      templateUrl: './templates/bottomsheet-list.html',
+      controller: 'ListBottomSheetCtrl',
+      targetEvent: $event
+    }).then(function(clickedItem) {
+      alert('Sharing on: '+clickedItem.name);
+    });
+  }
+  self.openDialog = function($event, action, $scope) {
     // Show the dialog
     $mdDialog.show({
       clickOutsideToClose: true,
       parent: angular.element(document.querySelector('#verseStuff')),
       controller: function($mdDialog, $scope) {
         // Save the clicked item
+        $scope.alert = '';
         this.action = action;
         this.collections = [
           {name: 'Prophetic Scriptures'},
           {name: 'Famous Stories'},
-        ]
+        ];
+        $scope.highlightColours = ['#7FC846', '#FF9800', '#03A9F4', '#CDDC39', '#009688', '#E91E63'];
+        $scope.setHighlightColor = function (index) {
+          $scope.highlightColours.selected = index;
+          $scope.highlightColour = $scope.highlightColours[index];
+          $('#theVerse').css({background: $scope.highlightColour});
+        };
         // Setup some handlers
         this.close = function() {
           $mdDialog.cancel();
@@ -192,14 +304,36 @@ app.controller('fabdialCtrl', function($mdDialog) {
           collection.name = val;
           this.collections.push(collection);
           this.addingnewcollection = false;
-        }
+        };
       },
       controllerAs: 'dialog',
       templateUrl: 'dialog.html',
       targetEvent: $event
     });
   }
-});
+})
+
+.controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
+  $scope.shareOptions = [
+    { name: 'Google +', icon: 'google_plus' },
+    { name: 'Facebook', icon: 'facebook' },
+    { name: 'Twitter', icon: 'twitter' },
+    { name: 'Instagram', icon: 'instagram' }
+  ];
+  $scope.shareOptionsClick = function($index) {
+    var clickedItem = $scope.shareOptions[$index];
+    $mdBottomSheet.hide(clickedItem);
+  };
+})
+.run(function($http, $templateCache) {
+    var urls = [
+      './assets/svg/facebook.svg',
+      './assets/svg/twitter.svg',
+    ];
+    angular.forEach(urls, function(url) {
+      $http.get(url, {cache: $templateCache});
+    });
+  });
 
 function hasWhiteSpace(s) {
   return /\s/g.test(s);

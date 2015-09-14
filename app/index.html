@@ -27,38 +27,27 @@
       <md-divider></md-divider>
       <md-list class="main-menu">
         <md-subheader class="md-no-sticky">Main</md-subheader>
-        <md-list-item class="md-primary selected" ng-click="navigateTo('/')" ng-class="{active : whatsActve('/')}">
+        <md-list-item class="md-primary" ng-click="navigateTo('/')" ng-class="{selected : whatsActve('/')}">
           <md-icon md-svg-icon="home"></md-icon>
-          <p> 
-            Home
-            <span ng-if="whatsActve('/')" style="color:purple">active</span>
-          </p>
+          <p> Home </p>
         </md-list-item>
-        <md-list-item class="md-primary" ng-click="navigateTo('resolutions')">
+        <md-list-item class="md-primary" ng-click="navigateTo('resolutions')" ng-class="{selected : whatsActve('/resolutions')}">
           <md-icon md-svg-icon="person_outline"></md-icon>
-          <p> My Resolutions 
-            <span ng-if="whatsActve('/resolutions')" style="color:purple">active</span>
-          </p>
+          <p> My Resolutions</p>
         </md-list-item>
-        <md-list-item ng-click="navigateTo('subscriptions')">
+        <md-list-item ng-click="navigateTo('subscriptions')" ng-class="{selected : whatsActve('/subscriptions')}">
           <md-icon md-svg-icon="playlist"></md-icon>
-          <p> Subscriptions
-            <span ng-if="whatsActve('/subscriptions')" style="color:purple">active</span>
-          </p>
+          <p> Subscriptions </p>
         </md-list-item>
 
         <md-subheader class="md-no-sticky">Bible</md-subheader>
-        <md-list-item class="md-primary" ng-click="navigateTo('bible')">
+        <md-list-item class="md-primary" ng-click="navigateTo('bible')" ng-class="{selected : whatsActve('/bible')}">
           <md-icon md-svg-icon="grid"></md-icon>
-          <p> All Books 
-            <span ng-if="whatsActve('/bible')" style="color:purple">active</span>
-          </p>
+          <p> All Books </p>
         </md-list-item>
-        <md-list-item ng-click="navigateTo('collections')">
+        <md-list-item ng-click="navigateTo('collections')" ng-class="{selected : whatsActve('/collections')}">
           <md-icon md-svg-icon="playlist"></md-icon>
-          <p> Verse Collections
-            <span ng-if="whatsActve('/collections')" style="color:purple">active</span>
-          </p>
+          <p> Verse Collections </p>
         </md-list-item>
 
         <md-divider class="md-no-sticky"></md-divider>
