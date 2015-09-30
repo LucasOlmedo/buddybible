@@ -1,21 +1,28 @@
 <ion-view view-title="Books">
-    <ion-content ng-class="{expanded:isExpanded}" style="padding-top:24px;">
-        <ion-list clas="animate-fade-slide-in-right">
-          <ion-item class="item-avatar item-remove-animate item-icon-right" ng-repeat="book in books" type="item-text-wrap" href="#/app/books/{{book.id}}">
-            <!-- <img ng-src="img/crown.jpg">{{book.shortname}} -->
-            <span class="avatar" style="text-align:center;padding-top:10px;height:40px;width:40px;" ng-class="book.theme">
-              {{book.shortname}}
-            </span>
-            <h2>{{book.name}}</h2>
-            <p>{{book.testament}} Testament</p>
-            <!-- <i class="icon ion-chevron-right icon-accessory"></i> -->
-
-            <ion-option-button class="button-assertive" ng-click="remove(book)">
-              Delete
-            </ion-option-button>
-          </ion-item>
-        </ion-list>
-    </ion-content>
+	<ion-nav-buttons side="left">
+	    <button class="button button-icon button-clear ion-android-arrow-back" ng-click="closeBook()" ng-if="previewingABook"></button>
+	 </ion-nav-buttons>
+  	<ion-content delegate-handle="mainScroll">
+	    <div id="{{$index}}" class="item book" ng-repeat="book in books" ng-class="{'open' : book.open}" ng-clic="openBook($index)" ui-sref="app.book({book: book.name})">
+	    	<div ng-class="{'book-header' : book.open}" on-dra="closeBook()">
+	    		<div ng-class="{'book-title' : book.open}">{{book.name}}</div>
+	    	</div>
+	    	<div class="padding-bottom" ng-class="{'book-body' : book.open}" ng-if="book.open">
+		    	<ion-content>
+		    		<div class="row chapters" ng-repeat="chapter in book.chapters" ng-if="$index % 3 === 0">
+	                    <div class="item col col-33" ng-if="$index < book.chaptersCount">
+	                        <div class="card" ui-sref="app.book({book: book.name, chapter:$index + 1, bookId : book.id})">{{$index + 1}}</div>
+	                    </div>
+	                    <div class="item col col-33" ng-if="$index + 1 < book.chaptersCount">
+	                        <div class="card" ui-sref="app.book({book: book.name, chapter:$index + 2, bookId : book.id})">{{$index + 2}}</div>
+	                    </div>
+	                    <div class="item col col-33" ng-if="$index + 2 < book.chaptersCount">
+	                        <div class="card" ui-sref="app.book({book: book.name, chapter:$index + 3, bookId : book.id})">{{$index + 3}}</div>
+	                    </div>
+	                </div>
+		    	</ion-content>
+	    	</div>
+	      	<!-- <h3 ng-bind-html="book.name"></h3> -->
+	    </div>
+  	</ion-content>
 </ion-view>
-
-

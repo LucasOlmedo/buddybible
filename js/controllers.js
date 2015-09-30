@@ -1,213 +1,128 @@
-angular.module('buddybible.controllers', [])
+angular.module('ionicons.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
-    // Form data for the login modal
-    $scope.loginData = {};
-    $scope.isExpanded = false;
-    $scope.hasHeaderFabLeft = false;
-    $scope.hasHeaderFabRight = false;
+.controller('AppCtrl', function($scope, $timeout, $ionicPopover, $location) {
+  $scope.showPackExtensions = false;
+  $scope.searching = false;
 
-    var navIcons = document.getElementsByClassName('ion-navicon');
-    for (var i = 0; i < navIcons.length; i++) {
-        navIcons.addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
+  $ionicPopover.fromTemplateUrl('mainPopover.html', {
+      scope: $scope
+  }).then(function(popover) {
+      $scope.mainPopover = popover;
+  });
+
+  $scope.$on('$destroy', function() {
+      $scope.mainPopover.remove();
+  });
+
+  $scope.closeMainPopover = function() {
+      $scope.mainPopover.hide();
+  };
+
+  $scope.navigateTo = function(path){
+      $scope.closeMainPopover();
+      $location.path(path);
+      // $state.go(path);
+  }
+
+  $scope.whatsActve = function(isItMe){
+      // $state.href(path);
+      return (isItMe === $location.path()) ? true : false ;
+  }
+})
+
+.controller('BooksCtrl', function($scope, $rootScope, $ionicScrollDelegate, $timeout, $location, booksService) {
+    var vm = this;
+    $scope.previewingABook = false;
+    $scope.$parent.hasNoShadow = false;
+    $scope.books = [];
+
+    booksService.all().then(
+      function(books) {
+          for (var i = 0; i < books.length; i++) {
+            books[i].chapters = getChapters(books[i].chaptersCount);
+            // console.log();
+          };
+          $scope.books = books;
+          console.log('booklist returned to controller.');
+      },
+      function(data) {
+          console.log('booklist retrieval failed.')
+    });
+
+    function getChapters(len){
+      a = [];
+      for (var i = 0; i < len; i++) {
+          a.push(i);
+      };
+      return a;
     }
 
-    var template =  '<ion-popover-view>' +
-                    '   <ion-content class="padding">' +
-                    '       <div class="popover-item">popover item</div>' +
-                    '   </ion-content>' +
-                    '</ion-popover-view>';
-
-    $scope.popover = $ionicPopover.fromTemplate(template, {
-        scope: $scope
-    });
-    $scope.closePopover = function() {
-        $scope.popover.hide();
-    };
-    //Cleanup the popover when we're done with it!
-    $scope.$on('$destroy', function() {
-        $scope.popover.remove();
-    });
-
-    ////////////////////////////////////////
-    // Layout Methods
-    ////////////////////////////////////////
-
-    $scope.hideNavBar = function() {
-        document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
-    };
-
-    $scope.showNavBar = function() {
-        document.getElementsByTagName('ion-nav-bar')[0].style.display = 'block';
-    };
-
-    $scope.noHeader = function() {
-        var content = document.getElementsByTagName('ion-content');
-        for (var i = 0; i < content.length; i++) {
-            if (content[i].classList.contains('has-header')) {
-                content[i].classList.toggle('has-header');
-            }
-        }
-    };
-
-    $scope.setExpanded = function(bool) {
-        $scope.isExpanded = bool;
-    };
-
-    $scope.setHeaderFab = function(location) {
-        var hasHeaderFabLeft = false;
-        var hasHeaderFabRight = false;
-
-        switch (location) {
-            case 'left':
-                hasHeaderFabLeft = true;
-                break;
-            case 'right':
-                hasHeaderFabRight = true;
-                break;
-        }
-
-        $scope.hasHeaderFabLeft = hasHeaderFabLeft;
-        $scope.hasHeaderFabRight = hasHeaderFabRight;
-    };
-
-    $scope.hasHeader = function() {
-        var content = document.getElementsByTagName('ion-content');
-        for (var i = 0; i < content.length; i++) {
-            if (!content[i].classList.contains('has-header')) {
-                content[i].classList.toggle('has-header');
-            }
-        }
-
-    };
-
-    $scope.hideHeader = function() {
-        $scope.hideNavBar();
-        $scope.noHeader();
-    };
-
-    $scope.showHeader = function() {
-        $scope.showNavBar();
-        $scope.hasHeader();
-    };
-
-    $scope.clearFabs = function() {
-        var fabs = document.getElementsByClassName('button-fab');
-        if (fabs.length && fabs.length > 1) {
-            fabs[0].remove();
-        }
-    };
-})
-
-.controller('LoginCtrl', function($scope, $timeout, $stateParams) {
-    $scope.$parent.clearFabs();
-    $timeout(function() {
-        $scope.$parent.hideHeader();
-    }, 0);
-    ionic.material.ink.displayEffect();
-})
-
-.controller('FriendsCtrl', function($scope, $stateParams, $timeout, books) {
-    $scope.books =  books.all();
-    $scope.getRandomTheme = function(){
-        themeList = ['purple' , 'deep-purple', 'orange', 'deep-orange', 
-                    'red', 'blue', 'light-blue', 'green', 'light-green', 
-                    'pink', 'yellow',  'lime', 'amber', 'teal',  'indigo',
-                    'cyan', 'brown', 'grey', 'blue-grey'];
-        return themeList[Math.floor(Math.random() * themeList.length)];
-    }
-    // Set Header
-    $scope.$parent.showHeader();
-    $scope.$parent.clearFabs();
-    $scope.isExpanded = false;
-    $scope.$parent.setExpanded(false);
-    $scope.$parent.setHeaderFab(false);
-
-    // Set Motion
-    ionic.material.motion.fadeSlideInRight();
-
-    // Set Ink
-    ionic.material.ink.displayEffect();
-})
-
-.controller('ProfileCtrl', function($scope, $stateParams, $timeout) {
-    // Set Header
-    $scope.$parent.showHeader();
-    $scope.$parent.clearFabs();
-    $scope.isExpanded = false;
-    $scope.$parent.setExpanded(false);
-    $scope.$parent.setHeaderFab(false);
-
-    // Set Motion
-    $timeout(function() {
-        ionic.material.motion.slideUp({
-            selector: '.slide-up'
-        });
-    }, 300);
-
-    $timeout(function() {
-        ionic.material.motion.fadeSlideInRight({
-            startVelocity: 3000
-        });
-    }, 700);
-
-    // Set Ink
-    ionic.material.ink.displayEffect();
-})
-
-.controller('ActivityCtrl', function($scope, $sce, $stateParams, $timeout, books) {
-    $scope.book = books.get($stateParams.bookId);
-    $scope.book.chapters = books.getChapters($scope.book.name);
-    $scope.chapters = $scope.book.chapters;
-    $scope.selectedchapter = 0;
-    $scope.selectedverse = 0;
-    $scope.bookSorts = [{testament : ''}, {testament : 'Old'},{testament : 'New'}];
-
-    $scope.to_trusted = function(html_code) {
-      return $sce.trustAsHtml(html_code);
-    };
-
-    $scope.setChapter = function(index){
-      $scope.selectedchapter = index;
-      $scope.selectedverse = 0;
+    $scope.openBook = function(id) {
+      if(!$scope.books[id].open){
+        $scope.lastPosition = $ionicScrollDelegate.getScrollPosition();
+        $scope.previewingABook = true;
+        $location.hash(id);
+        $ionicScrollDelegate.$getByHandle('mainScroll').anchorScroll(true);
+        $ionicScrollDelegate.freezeAllScrolls(true);
+        $scope.books[id].open = true;
+        $scope.openedBook = id;
+      }        
     }
 
-    // Set Header
-    $scope.$parent.showHeader();
-    $scope.$parent.clearFabs();
-    $scope.isExpanded = false;
-    $scope.$parent.setExpanded(false);
-    $scope.$parent.setHeaderFab(false);
-
-    $timeout(function() {
-        ionic.material.motion.fadeSlideIn({
-            selector: '.animate-fade-slide-in .item'
-        });
-    }, 200);
-
-    // Activate ink for controller
-    ionic.material.ink.displayEffect();
+    $scope.closeBook = function(){ 
+      $scope.previewingABook = false;     
+      $scope.books[$scope.openedBook].open = false;
+      $ionicScrollDelegate.freezeAllScrolls(false);
+      $ionicScrollDelegate.scrollTo($scope.lastPosition.left, $scope.lastPosition.top, false)
+    }
 })
 
-.controller('GalleryCtrl', function($scope, $stateParams, $timeout) {
-    $scope.$parent.showHeader();
-    $scope.$parent.clearFabs();
-    $scope.isExpanded = true;
-    $scope.$parent.setExpanded(true);
-    $scope.$parent.setHeaderFab(false);
+.controller('BookCtrl', function($scope, $sce, $timeout, $rootScope, $stateParams, $ionicSlideBoxDelegate, booksService){
+  var theBook = $stateParams.book.replace(/\s+/g, '');
+  var vm = this;
+  $scope.book = {};
+  $scope.$parent.hasNoShadow = false;
+  $scope.book.name = $stateParams.book;
+  // $scope.chapter = $stateParams.chapter;
+  $scope.chapter = 1;
+  $scope.chaptersArray = [0];
 
-    // Activate ink for controller
-    ionic.material.ink.displayEffect();
+  booksService.view(theBook).then(
+    function(data) {
+        vm.getArray(data.length);
+        $scope.book.chapters = data;
+    },
+    function(data) {
+        console.log('book retrieval failed.')
+  });
 
-    ionic.material.motion.pushDown({
-        selector: '.push-down'
-    });
-    ionic.material.motion.fadeSlideInRight({
-        selector: '.animate-fade-slide-in .item'
-    });
+  $scope.to_trusted = function(html_code) {
+    return $sce.trustAsHtml(html_code);
+  };
 
+  vm.getArray = function(len){
+    for (var i = 0; i < len; i++) {
+      if (i > 0) {
+        $scope.chaptersArray.push(i);
+        $ionicSlideBoxDelegate.update();
+      }else if(i == len-1){
+        $scope.activeSlide = $scope.chapter;
+        // vm.goToSlide($scope.chapter,0);
+      }
+    };
+    console.log($scope.chaptersArray);
+  }
+  $scope.slideChanged = function(index){
+    $scope.chapter = index + 1;
+  }
+
+  vm.goToSlide = function(index, time){
+      if (!time)
+        time = 500;
+      $ionicSlideBoxDelegate.slide(index, time);
+  }
 })
 
-;
+.controller('SettingsCtrl', function($scope) {
+  $scope.$parent.hasNoShadow = false;
+});

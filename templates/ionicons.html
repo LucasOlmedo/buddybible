@@ -1,0 +1,69 @@
+<ion-view view-title="Ionicons">
+  <ion-nav-buttons side="right">
+    <button class="button button-icon button-clear ion-android-search" ng-click="showFilterBar()"></button>
+    <button class="button button-icon button-clear ion-android-more-vertical" ng-click="mainPopover.show($event)"></button>
+  </ion-nav-buttons>
+	<div class="tabs-top tabs-striped tabs-striped-bottom tabs-standard {{iconNamingStyle == 1 ? 'tabs-icon-left' : 'tabs-icon-only'}}" ng-hide="searching">
+	    <div class="tabs" styl="padding-bottom:4px">
+	      <div class="indicator" style="left:{{activeTabPosition+'px'}}; width: {{activeTabWidth}}"></div>
+	      <a ng-class="{'active': currentPack === 0}" class="tab-item" ng-click="alterPack(0)">
+	        <i class="icon zmdi zmdi-android"></i>
+	        <span class="tab-title ng-binding">ion-android-</span>
+	      </a>
+	      <a ng-class="{'active': currentPack === 1}" class="tab-item" ng-click="alterPack(1)">
+	        <i class="icon zmdi zmdi-apple"></i>
+	        <span class="tab-title ng-binding">ion-ios-</span>
+	      </a>
+	      <a ng-class="{'active': currentPack === 2}" class="tab-item" ng-click="alterPack(2)">
+	        <i class="icon ion-ionic"></i>
+	        <span class="tab-title ng-binding">ion-</span>
+	      </a>
+	    </div>
+	</div>
+  <ion-content clas="has-tabs-top" ng-class="{'has-tabs-top' : !searching}">
+    <ion-slide-box show-pager="false" active-slide="activeSlide" on-slide-changed="slideChanged(index)">
+      <ion-slide class="slide">
+        <ion-content scroll-Detector>
+          <div class="item item-icon-left" ng-repeat="icon in icons.android | filter:search.query">
+            <i class="icon {{icon.name}}"></i>
+            <h3>
+              <span ng-bind-html="icon.name" ng-if="iconNamingStyle == 0"></span>
+              <span ng-bind-html="splitName(icon.name, icon.pack)" ng-if="iconNamingStyle == 1"></span>
+            </h3>
+            <p>
+              <span ng-if="tags.length" ng-repeat="tag in icon.tags">{{'#'+tag}}<span ng-if="tags.length > $index">,</span> </span>
+            </p>
+          </div>
+        </ion-content>
+      </ion-slide>
+      <ion-slide class="slide">
+        <ion-content scroll-Detector>
+          <div class="item item-icon-left" ng-repeat="icon in icons.ios">
+            <i class="icon {{icon.name}}"></i>
+            <h3>
+              <span ng-bind-html="icon.name" ng-if="iconNamingStyle == 0"></span>
+              <span ng-bind-html="splitName(icon.name, icon.pack)" ng-if="iconNamingStyle == 1"></span>
+            </h3>
+            <p>
+              <span ng-if="tags.length" ng-repeat="tag in icon.tags">{{'#'+tag}}<span ng-if="tags.length > $index">,</span> </span>
+            </p>
+          </div>
+        </ion-content>
+      </ion-slide>
+      <ion-slide class="slide">
+        <ion-content scroll-Detector>
+          <div class="item item-icon-left" ng-repeat="icon in icons.ionic">
+            <i class="icon {{icon.name}}"></i>
+            <h3>
+              <span ng-bind-html="icon.name" ng-if="iconNamingStyle == 0"></span>
+              <span ng-bind-html="splitName(icon.name, icon.pack)" ng-if="iconNamingStyle == 1"></span>
+            </h3>
+            <p>
+              <span ng-if="tags.length" ng-repeat="tag in icon.tags">{{'#'+tag}}<span ng-if="tags.length > $index">,</span> </span>
+            </p>
+          </div>
+        </ion-content>
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+</ion-view>
