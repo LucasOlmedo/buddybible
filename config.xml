@@ -4,8 +4,8 @@
     id        = "com.akilinc.waiterapp"
     versionCode="1"
     version   = "1.0">
-    <name>Ionicons App</name>
-    <description>An app to help easier management of ioniconcs</description>
+    <name>Buddy Bible</name>
+    <description>A nice bible companion.</description>
     <author href="facebook.com/wjkimaro" email="wakyinc@gmail.com">Akil Inc</author>
 
     <gap:platform name="ios" />

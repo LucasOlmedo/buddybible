@@ -83,14 +83,21 @@ angular.module('ionicons.controllers', [])
   $scope.book = {};
   $scope.$parent.hasNoShadow = false;
   $scope.book.name = $stateParams.book;
-  // $scope.chapter = $stateParams.chapter;
+  $scope.chapter = $stateParams.chapter;
+  $scope.chaptersArray = [0]
   $scope.chapter = 1;
-  $scope.chaptersArray = [0];
 
+  // var theBook = $scope.book.replace(/\s+/g, '');
   booksService.view(theBook).then(
     function(data) {
-        vm.getArray(data.length);
         $scope.book.chapters = data;
+        $scope.chaptersCount = data.length;
+        if (data.length > 4)
+          vm.getArray(3);
+        else
+          vm.getArray(data.length);
+        // console.log('book returned to controller.');
+        // vm.goToSlide(2, 0);
     },
     function(data) {
         console.log('book retrieval failed.')
@@ -100,20 +107,23 @@ angular.module('ionicons.controllers', [])
     return $sce.trustAsHtml(html_code);
   };
 
-  vm.getArray = function(len){
-    for (var i = 0; i < len; i++) {
-      if (i > 0) {
-        $scope.chaptersArray.push(i);
+  vm.getArray = function(len, updating){
+    if(!updating){
+      $scope.chaptersArray = [];
+      for (var i = 0; i < len; i++) {
+        $scope.chaptersArray.push($scope.chaptersArray.length);
         $ionicSlideBoxDelegate.update();
-      }else if(i == len-1){
-        $scope.activeSlide = $scope.chapter;
-        // vm.goToSlide($scope.chapter,0);
       }
-    };
-    console.log($scope.chaptersArray);
+    }
+    else if(updating){
+      $scope.chaptersArray.push($scope.chaptersArray.length);
+      $ionicSlideBoxDelegate.update();
+    }
   }
   $scope.slideChanged = function(index){
     $scope.chapter = index + 1;
+    if($scope.chaptersArray.length <= $scope.chaptersCount)
+      vm.getArray($scope.chaptersCount, true);
   }
 
   vm.goToSlide = function(index, time){
