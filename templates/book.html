@@ -3,6 +3,24 @@
     <!-- <button class="button button-icon button-clear ion-android-search" ng-click="showFilterBar()"></button>
     <button class="button button-icon button-clear ion-android-more-vertical" ng-click="mainPopover.show($event)"></button> -->
   </ion-nav-buttons>
+  <div id="player" ng-if="showDialpad">
+    <div class="drop-shadow" ng-click="toggleDialpad()"></div>
+    <div class="dialpad animated slideInUp">
+      <ion-content>
+        <div class="row chapters" ng-repeat="chapter in chaptersArray" ng-if="$index %3 === 0">
+          <div class="col col-33" ng-if="$index < chaptersArray.length">
+            <div class="button card" ng-click="goToSlide($index)">{{$index + 1}}</div>
+          </div>
+          <div class="col col-33" ng-if="$index + 1 < chaptersArray.length">
+            <div class="button card" ng-click="goToSlide($index + 1)" >{{$index + 2}}</div>
+          </div>
+          <div class="col col-33" ng-if="$index + 2 < chaptersArray.length">
+            <div class="button card" ng-click="goToSlide($index + 2)">{{$index + 3}}</div>
+          </div>
+        </div>
+      </ion-content>
+    </div>
+  </div>
   <ion-content>
     <!-- <div ng-bind-html="to_trusted(book.chapters[0].stringVerses)"></div> -->
     <ion-slide-box show-pager="false" active-slide="activeSlide" on-slide-changed="slideChanged(index)">

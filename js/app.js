@@ -53,6 +53,10 @@ angular.module('ionicons', ['ionic', 'jett.ionic.filter.bar', 'ionicons.controll
       'menuContent': {
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
+      },
+      'fabContent': {
+          template: '<button id="fab-order" class="button button-fab button-fab-bottom-right drop limes" style="display:none" ng-class="turnOn" data-ink-color="#E2EC91" data-ink-opacity=".8" ng-click="newTask()"><i class="icon ion-plus"></i></button>',
+          controller: 'BooksCtrl'
       }
     }
   })
@@ -63,6 +67,10 @@ angular.module('ionicons', ['ionic', 'jett.ionic.filter.bar', 'ionicons.controll
       views: {
           'menuContent': {
               templateUrl: 'templates/book.html',
+              controller: 'BookCtrl'
+          },
+          'fabContent': {
+              template: '<button id="fab-order" class="button button-fab button-fab-bottom-right spin orange" ng-class="turnOn" data-ink-color="#E2EC91" data-ink-opacity=".8" ng-show="!showDialpad" ng-click="toggleDialpad()"><i class="zmdi icon zmdi-dialpad"></i></button>',
               controller: 'BookCtrl'
           }
       }

@@ -3,6 +3,7 @@ angular.module('ionicons.controllers', [])
 .controller('AppCtrl', function($scope, $timeout, $ionicPopover, $location) {
   $scope.showPackExtensions = false;
   $scope.searching = false;
+  $scope.showDialpad = false;
 
   $ionicPopover.fromTemplateUrl('mainPopover.html', {
       scope: $scope
@@ -28,6 +29,10 @@ angular.module('ionicons.controllers', [])
       // $state.href(path);
       return (isItMe === $location.path()) ? true : false ;
   }
+
+  $scope.toggleDialpad = function(){
+    $scope.showDialpad = !$scope.showDialpad;
+  };
 })
 
 .controller('BooksCtrl', function($scope, $rootScope, $ionicScrollDelegate, $timeout, $location, booksService) {
@@ -87,15 +92,25 @@ angular.module('ionicons.controllers', [])
   $scope.chaptersArray = [0]
   $scope.chapter = 1;
 
+  $timeout(function(){
+    // $scope.$parent.showDialpad = false;
+    $scope.turnOn = 'on';
+  },500);
+
+  // $scope.toggleDialpad = function(){
+    // $scope.$parent.showDialpad = true;
+  // };
+
   // var theBook = $scope.book.replace(/\s+/g, '');
   booksService.view(theBook).then(
     function(data) {
         $scope.book.chapters = data;
         $scope.chaptersCount = data.length;
-        if (data.length > 4)
-          vm.getArray(3);
-        else
+        // if (data.length > 4)
+        //   vm.getArray(3);
+        // else
           vm.getArray(data.length);
+
         // console.log('book returned to controller.');
         // vm.goToSlide(2, 0);
     },
@@ -122,14 +137,20 @@ angular.module('ionicons.controllers', [])
   }
   $scope.slideChanged = function(index){
     $scope.chapter = index + 1;
-    if($scope.chaptersArray.length <= $scope.chaptersCount)
-      vm.getArray($scope.chaptersCount, true);
+    // if($scope.chaptersArray.length <= $scope.chaptersCount)
+    //   vm.getArray($scope.chaptersCount, true);
   }
 
   vm.goToSlide = function(index, time){
       if (!time)
         time = 500;
       $ionicSlideBoxDelegate.slide(index, time);
+  }
+
+  $scope.goToSlide = function(index, time){
+      $scope.chapter;
+      $ionicSlideBoxDelegate.slide(index);
+      $scope.$parent.showDialpad = false;
   }
 })
 

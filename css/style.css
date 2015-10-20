@@ -81,6 +81,11 @@ p {
   background: #9C27B0;
   color: #fefefe;
 }
+.bar .title{
+  position: relative;
+  left:5px !important;
+  font-size: 20px !important;
+}
 .bar-custom .button-icon{
 	color: #fefefe;
 }
@@ -154,5 +159,105 @@ p {
     height: 15vw;
     line-height: 15vw;
     text-align: center;
-    font-size: 9vw;
+    font-size: 6vw;
+    box-shadow: none;
+    background-color: transparent;
+    color: #868686;
+    cursor: pointer;
+    /*border-radius: 15vw;*/
+}
+
+.chapters .card:hover{
+    /*background-color: #fefefe;*/
+}
+
+#player{
+    position: absolute;bottom:0;
+    width:100%;
+    height:100%;z-index: 99999;
+    box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.26);
+}
+.drop-shadow{
+    position: absolute;top:0;
+    background:rgba(0, 0, 0, 0.26);
+    height:100%;width:100%;
+}
+.dialpad{
+    z-index: 1000;
+    position: absolute;bottom:0;
+    background:#e5e5e5;
+    height:300px;width:100%;
+    box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.26);
+}
+
+.orange, .orange:active{background-color: #FF9800;color: #211400;}.orange.inactive{color: #FFD494;}
+
+
+/*ANIMATIONS*/
+.animated {
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+.slideInUp {
+  -webkit-animation-name: slideInUp;
+  animation-name: slideInUp;
+}
+
+@-webkit-keyframes slideOutDown {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    visibility: hidden;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    visibility: hidden;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+.slideOutDown {
+  -webkit-animation-name: slideOutDown;
+  animation-name: slideOutDown;
 }
