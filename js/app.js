@@ -70,7 +70,7 @@ angular.module('ionicons', ['ionic', 'jett.ionic.filter.bar', 'ionicons.controll
               controller: 'BookCtrl'
           },
           'fabContent': {
-              template: '<button id="fab-order" class="button button-fab button-fab-bottom-right spin orange" ng-class="turnOn" data-ink-color="#E2EC91" data-ink-opacity=".8" ng-show="!showDialpad" ng-click="toggleDialpad()"><i class="zmdi icon zmdi-dialpad"></i></button>',
+              template: '<button id="fab-dialpad" class="button button-fab button-fab-bottom-right spin orange" ng-class="turnOn" data-ink-color="#E2EC91" data-ink-opacity=".8" ng-show="!showDialpad" ng-click="toggleDialpad()"><i class="zmdi icon zmdi-dialpad"></i></button>',
               controller: 'BookCtrl'
           }
       }

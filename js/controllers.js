@@ -89,8 +89,8 @@ angular.module('ionicons.controllers', [])
   $scope.$parent.hasNoShadow = false;
   $scope.book.name = $stateParams.book;
   $scope.chapter = $stateParams.chapter;
-  $scope.chaptersArray = [0]
-  $scope.chapter = 1;
+  $scope.chaptersArray = [0];
+  $scope.chapter = $stateParams.chapter ? $stateParams.chapter : 0;
 
   $timeout(function(){
     // $scope.$parent.showDialpad = false;
@@ -109,10 +109,12 @@ angular.module('ionicons.controllers', [])
         // if (data.length > 4)
         //   vm.getArray(3);
         // else
-          vm.getArray(data.length);
-
-        // console.log('book returned to controller.');
+        vm.getArray(data.length);
         // vm.goToSlide(2, 0);
+        // console.log('book returned to controller.');
+        $timeout(function(){
+          vm.goToSlide($scope.chapter, 0);
+        },500);
     },
     function(data) {
         console.log('book retrieval failed.')
@@ -136,7 +138,8 @@ angular.module('ionicons.controllers', [])
     }
   }
   $scope.slideChanged = function(index){
-    $scope.chapter = index + 1;
+    // alert($scope.activeSlide);
+    $scope.chapter = index;
     // if($scope.chaptersArray.length <= $scope.chaptersCount)
     //   vm.getArray($scope.chaptersCount, true);
   }

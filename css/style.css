@@ -124,7 +124,7 @@ p {
 }
 .book.open{
     padding: 0;
-    height: 100vh;
+    height: 100%;
 }
 .book-header{
     display: table;
@@ -133,7 +133,7 @@ p {
     font-size: 30px;
     color: #fefefe;
     padding: 16px;
-    height: 30vh;
+    height: 30%;
     background: #9C27B0;
     box-shadow: 0 3px 5px 0 rgba(0,0,0,.26);
 }
@@ -148,7 +148,7 @@ p {
     background: #fefefe;
     color: #343434;
     padding: 16px;
-    height: 63vh;
+    height: 63%;
 }
 .chapters{
 }
@@ -167,8 +167,8 @@ p {
     /*border-radius: 15vw;*/
 }
 
-.chapters .card:hover{
-    /*background-color: #fefefe;*/
+.chapters .card.active{
+    background-color: #fefefe;
 }
 
 #player{
