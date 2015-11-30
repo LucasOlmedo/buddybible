@@ -8,6 +8,12 @@
 	    </div>
   	</ion-header-bar>
   	<ion-content delegate-handle="booksScroll">
+	  	<div class="list" ng-show="emptyContent">
+	  		<div class="item">
+				<h2>Whoops! no content to display.</h2>
+				<p>Please refresh filter to see some content.</p>
+			</div>
+	  	</div>
   		<div class="row books">
   			<div id="{{$index}}" class="col" ng-repeat="book in books " ui-sref="app.book({book: book.name})">
   				<div class="card" style="margin:0;">

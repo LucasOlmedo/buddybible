@@ -32,6 +32,7 @@ angular.module('ionicons.controllers', [])
     $scope.$parent.hasNoShadow = false;
     $scope.books = [];
     $scope.viewStyle = 'list';
+    $scope.emptyContent = false;
 
     booksService.all().then(
       function(books) {
@@ -61,7 +62,12 @@ angular.module('ionicons.controllers', [])
           $scope.searching = true;
         },
         update: function (filteredItems) {
-            $scope.books = filteredItems;
+            if (filteredItems.length < 1) {
+              $scope.emptyContent = true;
+            }else{
+              $scope.emptyContent = false;
+            }
+          $scope.books = filteredItems;
         },
         cancel: function () {
           $scope.searching = false;

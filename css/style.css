@@ -47,7 +47,9 @@ p {
   top:65px;
 }
 .filter-bar-wrapper .button{
-    box-shadow:none !important;   
+    margin-top: -10px;
+    /*background-color: red;*/
+    /*box-shadow:none !important;   */
 }
 .filter-bar-cancel{
     color: #000 !important;
