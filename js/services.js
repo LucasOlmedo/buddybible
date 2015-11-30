@@ -42,8 +42,8 @@ angular.module('ionicons.services', [])
      function VerseString(verses){
       string = '';
       for (var i = 0; i < verses.length; i++) {
-        string += '<div style="margin:5px"><md-button ng-click="verseClicked('+verses[i][i+1]+')"><strong><sup style="color:#FF5722;font-weight:bolder">'+[i+1]+'</sup></strong> ';
-        string += verses[i][i+1] +'</md-button></div><br/>';
+        string += '<div style="margin:5px"><strong><sup style="color:#FF5722;font-weight:bolder">'+[i+1]+'</sup></strong> ';
+        string += verses[i][i+1] +'</div><br/>';
       };
       return string;
     }

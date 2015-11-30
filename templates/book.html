@@ -18,7 +18,12 @@
     <ion-slide-box on-hold="toggleChapters(true)" class="chapters-slides" ng-class="{'scaleSlide' : showingChapters}" show-pager="false" active-slide="activeSlide" on-slide-changed="slideChanged(index)">
       <ion-slide class="slide" ng-repeat="chapter in chaptersArray" ng-if="$index < chaptersCount">
         <ion-content>
-          <div class="padding" ng-bind-html="to_trusted(book.chapters[$index].stringVerses)"></div>
+          <!-- <div class="padding" ng-bind-html="to_trusted(book.chapters[$index].stringVerses)"></div> -->
+          <div ng-click="previewVerse($index + 1, verse[$index + 1])" ng-repeat="verse in book.chapters[$index].verses" style="margin:15px 25px">
+            <strong><sup style="color:#FF5722;font-weight:bolder">{{$index + 1}}</sup></strong>
+            {{verse[$index + 1]}}
+          </div>
+          <br>
         </ion-content>
       </ion-slide>
     </ion-slide-box>

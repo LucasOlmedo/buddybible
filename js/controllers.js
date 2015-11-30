@@ -84,7 +84,7 @@ angular.module('ionicons.controllers', [])
     }
 })
 
-.controller('BookCtrl', function($scope, $sce, $timeout, $ionicBackdrop, $rootScope, $stateParams, $ionicSlideBoxDelegate, booksService){
+.controller('BookCtrl', function($scope, $sce, $timeout, $ionicActionSheet, $ionicPopup, $rootScope, $stateParams, $ionicSlideBoxDelegate, booksService){
   var vm = this;
   $scope.book = {};
   $scope.$parent.hasNoShadow = false;
@@ -100,6 +100,102 @@ angular.module('ionicons.controllers', [])
     $scope.turnOn = 'on';
   },500);
 
+  $scope.previewVerse = function(verseIndex, content){
+    var passage = {
+      book: $scope.book.name,
+      chapter : $scope.chapter + 1,
+      verse: verseIndex,
+      content : content
+    }
+
+    $ionicActionSheet.show({
+      titleText: '<h3>' + passage.book + ' ' + passage.chapter + ' : ' + passage.verse + '</h3>',
+      buttons: [
+        { text: '<i class="icon ion-android-share-alt balance"></i> Share' },
+        { text: '<i class="icon ion-ios-color-wand assertiv"></i> Highlight' },
+      ],
+      destructiveText: 'Cancel',
+      // destructiveText: '<i class="icon ion-close"></i> Cancel',
+      // cancelText: 'Cancel',
+      cancel: function() {
+        console.log('CANCELLED');
+      },
+      buttonClicked: function(index) {
+        if(index === 0){
+          $scope.shareOptions(passage);
+        }
+        else if(index === 1){
+          // do som'n
+        }
+        return true;
+      },
+      destructiveButtonClicked: function() {
+        console.log('DESTRUCT');
+        return true;
+      }
+    });
+  }
+
+  $scope.shareOptions = function(passage){
+    $ionicActionSheet.show({
+      titleText: '<h3>Share options:</h3>',
+      buttons: [
+        { text: '<i class="icon zmdi zmdi-facebook b"></i> Facebook' },
+        { text: '<i class="icon zmdi zmdi-twitter"></i> Twitter' },
+        { text: '<i class="icon ion-bluetooth"></i> Bluetooth' },
+      ],
+      destructiveText: 'Cancel',
+      // destructiveText: '<i class="icon ion-close"></i> Cancel',
+      // cancelText: 'Cancel',
+      cancel: function() {
+        console.log('CANCELLED');
+      },
+      buttonClicked: function(index) {
+        if(index === 0){
+          // $scope.shareOptions(passage);
+        }
+        else if(index === 1){
+          // do som'n
+        }
+        return true;
+      },
+      destructiveButtonClicked: function() {
+        console.log('DESTRUCT');
+        return true;
+      }
+    });
+    // var myPopup = $ionicPopup.show({
+    //   template: '<i class="icon ion-android-share-alt"></i> Facebook',
+    //   title: 'Share on:',
+    //   // subTitle: 'Please use normal things',
+    //   scope: $scope,
+    //   buttons: [
+    //     { text: 'Cancel' },
+    //     {
+    //       text: '<b>Save</b>',
+    //       type: 'button-positive',
+    //       onTap: function(e) {
+    //         if (!$scope.data.wifi) {
+    //           //don't allow the user to close unless he enters wifi password
+    //           e.preventDefault();
+    //         } else {
+    //           return $scope.data.wifi;
+    //         }
+    //       }
+    //     }
+    //   ]
+    // });
+    // myPopup.then(function(res) {
+    //   console.log('Tapped!', res);
+    // });
+    // $timeout(function() {
+    //    myPopup.close(); //close the popup after 3 seconds for some reason
+    // }, 3000);
+    $scope.cleanUp = function(oldString){
+      return oldString.replace(/2019/g,"'");
+      // return oldString;
+    }
+  }
 
   $scope.toggleChapters = function(value){
     $scope.showChaptersBackdrop = false;
@@ -173,4 +269,5 @@ angular.module('ionicons.controllers', [])
 
 .controller('SettingsCtrl', function($scope) {
   $scope.$parent.hasNoShadow = false;
+  $scope.receiveDailyVerses = true;
 });

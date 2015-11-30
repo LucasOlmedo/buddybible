@@ -2,15 +2,12 @@
   <ion-header-bar class="bar-stable">
     <button class="button back-button buttons no-text button-clear header-item" ng-click="$ionicGoBack()"><i class="icon ion-android-arrow-back"></i></button>
     <h1 class="title">Settings</h1>
-    <div class="buttons buttons-right">
-      <button class="button button-icon button-clear ion-android-more-vertical" ng-click="mainPopover.show($event)"></button>
-    </div>
   </ion-header-bar>
   <ion-content styl="top: 54px;" class="expanded">
     <ion-list>
         <div style="border-color: #E4E4E4;color:#9E9E9E" class="item item-divider">Ionicons Settings</div>
-        <ion-toggle class="toggle-small" ng-model="showPackExtensions" ng-change="packExtensions()">
-            Show Icon pack extensions
+        <ion-toggle class="toggle-small toggle-stable" ng-model="receiveDailyVerses" ng-change="dailyVerses()">
+            Receive daily verses.
         </ion-toggle>
     </ion-list>
   </ion-content>
