@@ -1,9 +1,3 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
 angular.module('ionicons', ['ionic', 'jett.ionic.filter.bar', 'ionicons.controllers', 'ionicons.services'])
 
 .run(function($ionicPlatform) {
@@ -70,7 +64,7 @@ angular.module('ionicons', ['ionic', 'jett.ionic.filter.bar', 'ionicons.controll
               controller: 'BookCtrl'
           },
           'fabContent': {
-              template: '<button id="fab-dialpad" class="button button-fab button-fab-bottom-right spin orange" ng-class="turnOn" data-ink-color="#E2EC91" data-ink-opacity=".8" ng-show="!showDialpad" ng-click="toggleDialpad()"><i class="zmdi icon zmdi-dialpad"></i></button>',
+              template: '<button id="fab-dialpad" class="button button-fab button-fab-bottom-right on spin orange" ng-clas="turnOn" data-ink-color="#E2EC91" data-ink-opacity=".8" ng-show="!showDialpad" ng-click="toggleDialpad()"><i class="zmdi icon zmdi-dialpad"></i></button>',
               controller: 'BookCtrl'
           }
       }

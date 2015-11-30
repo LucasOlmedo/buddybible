@@ -1,23 +1,12 @@
 angular.module('ionicons.services', [])
 
 .factory('booksService', ['$http', '$q', '$timeout', function($http, $q, $timeout) {
-    var themeList = ['purple' , 'deep-purple', 'orange', 'deep-orange', 'red', 'blue', 'light-blue', 'green', 'light-green', 'pink', 'yellow',  'lime', 'amber', 'teal',  'indigo','cyan', 'brown', 'grey', 'blue-grey'];
-    var shortnames = ["Gn", "Ex", "Lv", "Nm", "Dt", "Jo", "Jgs", "Ru", "1 Sm", "2 Sm", "1 Kgs", "2 Kgs", "1 Chr", "2 Chr", "Ezr", "Neh", "Est", 
-  "Jb", "Ps", "Prv", "Eccl", "Sg", "Is", "Jer", "Lam", "Ez", "Dn", "Hos", "Jl", "Am", "Ob", "Jon", "Mi", "Na", "Hb", "Zep", 
-  "Hg", "Zec", "Mal", "Mat", "Mk", "Lk", "Jn", "Ac", "Rm", "1 Co", "2 Co", "Ga", "Ep", "Php", "Col", "1 Th", "2 Th", "1 Tm", "2 Tm",
-   "Ti", "Phm", "He", "Jm", "1 Pt", "2 Pt", "1 Jn", "2 Jn", "3 Jn", "Ju", "Rv"];
-
     return {
         all: function() {
             var def = $q.defer();
 
             $http.get("js/books-detailed.json")
                 .success(function(data) {
-                    // for (var i = 0; i < data.length; i++) {
-                    //     data[i].id = i + 1;
-                    //     data[i].shortname = shortnames[i];
-                    // };
-                    // console.log(JSON.stringify(data));
                     def.resolve(data);
                 })
                 .error(function() {

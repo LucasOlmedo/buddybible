@@ -24,22 +24,14 @@ angular.module('ionicons.controllers', [])
       $location.path(path);
       // $state.go(path);
   }
-
-  $scope.whatsActve = function(isItMe){
-      // $state.href(path);
-      return (isItMe === $location.path()) ? true : false ;
-  }
-
-  $scope.toggleDialpad = function(){
-    $scope.showDialpad = !$scope.showDialpad;
-  };
 })
 
-.controller('BooksCtrl', function($scope, $rootScope, $ionicScrollDelegate, $timeout, $location, booksService) {
+.controller('BooksCtrl', function($scope, $rootScope, $ionicScrollDelegate, $ionicFilterBar, $timeout, $location, booksService) {
     var vm = this;
     $scope.previewingABook = false;
     $scope.$parent.hasNoShadow = false;
     $scope.books = [];
+    $scope.viewStyle = 'list';
 
     booksService.all().then(
       function(books) {
@@ -62,31 +54,36 @@ angular.module('ionicons.controllers', [])
       return a;
     }
 
-    $scope.openBook = function(id) {
-      if(!$scope.books[id].open){
-        $scope.lastPosition = $ionicScrollDelegate.getScrollPosition();
-        $scope.previewingABook = true;
-        $location.hash(id);
-        $ionicScrollDelegate.$getByHandle('mainScroll').anchorScroll(true);
-        $ionicScrollDelegate.freezeAllScrolls(true);
-        $scope.books[id].open = true;
-        $scope.openedBook = id;
-      }        
-    }
+    $scope.search = function (){
+      filterBarInstance = $ionicFilterBar.show({
+        items: $scope.books,
+        done: function () {
+          $scope.searching = true;
+        },
+        update: function (filteredItems) {
+            $scope.books = filteredItems;
+        },
+        cancel: function () {
+          $scope.searching = false;
+        },
+        filterProperties: 'name'
+      });
+    };
 
-    $scope.closeBook = function(){ 
-      $scope.previewingABook = false;     
-      $scope.books[$scope.openedBook].open = false;
-      $ionicScrollDelegate.freezeAllScrolls(false);
-      $ionicScrollDelegate.scrollTo($scope.lastPosition.left, $scope.lastPosition.top, false)
+    $scope.toggleViewStyle = function(){
+      // $location.hash(0);
+      $ionicScrollDelegate.$getByHandle('booksScroll').scrollTop(false);
+      
+      $scope.viewStyle = $scope.viewStyle === 'list' ? 'grid' : 'list';
     }
 })
 
-.controller('BookCtrl', function($scope, $sce, $timeout, $rootScope, $stateParams, $ionicSlideBoxDelegate, booksService){
-  var theBook = $stateParams.book.replace(/\s+/g, '');
+.controller('BookCtrl', function($scope, $sce, $timeout, $ionicBackdrop, $rootScope, $stateParams, $ionicSlideBoxDelegate, booksService){
   var vm = this;
   $scope.book = {};
   $scope.$parent.hasNoShadow = false;
+  $scope.showingChapters = false;
+  var theBook = $stateParams.book.replace(/\s+/g, '');
   $scope.book.name = $stateParams.book;
   $scope.chapter = $stateParams.chapter;
   $scope.chaptersArray = [0];
@@ -97,9 +94,21 @@ angular.module('ionicons.controllers', [])
     $scope.turnOn = 'on';
   },500);
 
-  // $scope.toggleDialpad = function(){
-    // $scope.$parent.showDialpad = true;
-  // };
+
+  $scope.toggleChapters = function(value){
+    $scope.showChaptersBackdrop = false;
+
+    if(value)
+      $scope.showingChapters = value;
+    else
+      $scope.showingChapters = !$scope.showingChapters;
+
+    if($scope.showingChapters){
+      $timeout(function() {
+        $scope.showChaptersBackdrop = true;
+      }, 100);
+    }
+  }
 
   // var theBook = $scope.book.replace(/\s+/g, '');
   booksService.view(theBook).then(
@@ -138,7 +147,6 @@ angular.module('ionicons.controllers', [])
     }
   }
   $scope.slideChanged = function(index){
-    // alert($scope.activeSlide);
     $scope.chapter = index;
     // if($scope.chaptersArray.length <= $scope.chaptersCount)
     //   vm.getArray($scope.chaptersCount, true);
@@ -151,9 +159,9 @@ angular.module('ionicons.controllers', [])
   }
 
   $scope.goToSlide = function(index, time){
-      $scope.chapter;
       $ionicSlideBoxDelegate.slide(index);
       $scope.$parent.showDialpad = false;
+      $scope.toggleChapters();
   }
 })
 

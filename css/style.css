@@ -6,13 +6,6 @@ p {
 .scroll {
     height: 100%;
 }
-.slider{
-    height: 100%;
-}
-.slide{
-    height: 100%;
-    width: 100%;
-}
 
 .popover{
     width:180px;
@@ -29,83 +22,29 @@ p {
 .popup-body{    
     overflow: visible;
 }
-.tabs-striped .tabs{
-    top:35px !important;
-}
-.tabs-striped .tabs{
-    overflow: visible;
-    background: #2196F3;
-    color: #fefefe;
-}
-.tabs-striped .tabs .indicator{
-    position: absolute;bottom:0px;left: 0;
-    content: " ";
-    width: 15px;
-    height:2px;
-    background-color: #fefefe;
-
-    -webkit-transition: all .5s ease-in-out;
-    -o-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out;
-}
-
-.tab-item.active{
-    /*margin-top: 1px;
-    border-width: 0px 0px 4px 0px !important;border-style: solid;border-color: #fefefe !important;*/
-    margin-top: 0 !important;;
-    border-width: 0 !important;;
-    border-style: none !important;;
-}
-.tab-item.activated{
-    margin-top: 0 !important;;
-    border-width: 0 !important;;
-    border-style: none !important;;
-}
-.has-no-shadow .bar{
-    box-shadow:none;
-}
-
-.menu-open .ion-android-menu {
-    transform: rotate(-360deg);
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-}
-
-.menu-open .ion-android-menu:before {
-    content: "\f2ca";
-}
-
 /* Menu
 ==================================*/
-.bar-custom{
-  background: #9C27B0;
-  color: #fefefe;
+.bar{
+  height:64px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
 }
 .bar .title{
   position: relative;
   left:5px !important;
+  line-height: 55px !important;
   font-size: 20px !important;
 }
-.bar-custom .button-icon{
-	color: #fefefe;
+.bar .button {
+  top:8px;
+  /*background-color: red !important;*/
+  min-height: 38px;
+  min-width: 40px;
+  max-width: 44px;
+  margin-bottom: 0;
+  max-height: 40px;
 }
-.bar-custom.has-no-shadow{
-    box-shadow:none;
-}
-.menu h2 {
-    color:#fff;
-    bottom: 0;
-    font-size: 18px;
-    left:30px;
-    /*right: 76px;*/
-    position: absolute;
-}
-.menu .item.current{
-    background:#F3F5F6 !important;
-    color: #7A7A7A!important;
-}
-.title{
-    left: 32px !important;
+.has-header{
+  top:65px;
 }
 .filter-bar-wrapper .button{
     box-shadow:none !important;   
@@ -115,79 +54,140 @@ p {
     padding: 0 !important;
 }
 
-/* BOOKS
-==================================*/
-.book{
-    /*transform: rotate(-360deg);*/
-    /*-webkit-transition: all 0.5s linear;
-    transition: all 0.5s linear;*/
+.books{
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
-.book.open{
-    padding: 0;
+/*.books .col{
+  min-width: 100%;
+}*/
+@media (max-width: 300px){
+  .books .col{
+    min-width: 90% !important;
+  }  
+}
+@media (max-width: 450px){
+  .books .col{
+    min-width: 40%;
+  }  
+}
+@media (min-width: 450px){
+  .books .col{
+    min-width: 30%;
+  }  
+}
+@media (min-width: 680px){
+  .books .col{
+    min-width: 25%;
+  }  
+}
+@media (min-width: 920px){
+  .books .col{
+    min-width: 15%;
+  }  
+}
+
+.slider.chapters-slides{
     height: 100%;
-}
-.book-header{
-    display: table;
     width: 100%;
-    text-align: center;
-    font-size: 30px;
-    color: #fefefe;
-    padding: 16px;
-    height: 30%;
-    background: #9C27B0;
-    box-shadow: 0 3px 5px 0 rgba(0,0,0,.26);
+    /*background-color: red;*/
 }
-.book-title{
-    display: table-cell;
-    vertical-align: middle;
+.slider.chapters-slides.scaleSlide{
+    height: 100%;
+
+    -webkit-animation-name: scaleSlide;
+    animation-name: scaleSlide;
+
+    -webkit-animation-duration: 0.1525s;
+    animation-duration: 0.1525s;
+
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
-.book-body{
-    position: relative;
-    top:10px;
-    font-size: 30px;
-    background: #fefefe;
-    color: #343434;
-    padding: 16px;
-    height: 63%;
+.slider.chapters-slides.scaleSlide .slide{
+  width: calc(100% - 60px);
 }
-.chapters{
-}
-.chapters .col{
-    border: none;
-}
-.chapters .card{
-    height: 15vw;
-    line-height: 15vw;
-    text-align: center;
-    font-size: 6vw;
-    box-shadow: none;
-    background-color: transparent;
-    color: #868686;
-    cursor: pointer;
-    /*border-radius: 15vw;*/
+.chapters-slides .slide{
+    height: 100%;
+    width: 100%;
 }
 
-.chapters .card.active{
-    background-color: #fefefe;
+@-webkit-keyframes scaleSlide{
+  from {
+    width: 100%;
+    left: 0;
+  }
+
+  100% {
+    width: calc(100% - 60px);
+    left: 60px;
+  }
 }
 
-#player{
-    position: absolute;bottom:0;
-    width:100%;
-    height:100%;z-index: 99999;
-    box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.26);
+@keyframes scaleSlide{
+  from {
+    width: 100%;
+    left: 0;
+  }
+
+  100% {
+    width: calc(100% - 60px);
+    left: 60px;
+  }
 }
-.drop-shadow{
-    position: absolute;top:0;
-    background:rgba(0, 0, 0, 0.26);
-    height:100%;width:100%;
+
+.chapters-list{
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 60px;
+  height: 100%;
+  box-shadow: 2px 0 5px 0 rgba(0,0,0,.26);
+
+  /*-webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;*/
+
+  -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
 }
-.dialpad{
-    z-index: 1000;
-    position: absolute;bottom:0;
-    background:#e5e5e5;
-    height:300px;width:100%;
-    box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.26);
+
+@-webkit-keyframes showChapters {
+  from {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(-100%, 0,  0);
+    visibility: hidden;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+}
+
+@keyframes showChapters {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: hidden;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+}
+.showChapters{
+  -webkit-animation-name: showChapters;
+  animation-name: showChapters;
+
+  -webkit-animation-duration: 0.2s;
+  animation-duration: 0.2s;
+
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .orange, .orange:active{background-color: #FF9800;color: #211400;}.orange.inactive{color: #FFD494;}

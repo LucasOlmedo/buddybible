@@ -1,14 +1,21 @@
 <ion-view view-titl="">
-  <ion-header-bar class="bar-custom">
+  <ion-header-bar class="bar-stable">
     <button class="button back-button buttons no-text button-clear header-item" ng-click="$ionicGoBack()"><i class="icon ion-android-arrow-back"></i></button>
-    <h1 style="color:#fefefe"class="title">{{book.name}} {{chapter + 1}}</h1>
+    <h1 class="title">{{book.name}} {{chapter + 1}}</h1>
     <div class="buttons buttons-right">
       <button class="button button-icon button-clear ion-android-more-vertical" ng-click="mainPopover.show($event)"></button>
     </div>
   </ion-header-bar>
   <ion-content>
-    <!-- <div ng-bind-html="to_trusted(book.chapters[0].stringVerses)"></div> -->
-    <ion-slide-box show-pager="false" active-slide="activeSlide" on-slide-changed="slideChanged(index)">
+    <div class="chapters-list" ng-class="{'showChapters' : showingChapters}">
+      <ion-scroll zooming="false" direction="y" style="width: 60px; height: 100%">
+        <div class="item" ng-click="goToSlide($index)" ng-repeat="i in chaptersArray">{{i + 1}}</div>
+      </ion-scroll>
+    </div>
+
+    <div style="left:60px" ng-click="toggleChapters(false)" class="backdrop active" ng-class="{'visible' : showChaptersBackdrop}"></div>
+
+    <ion-slide-box on-hold="toggleChapters(true)" class="chapters-slides" ng-class="{'scaleSlide' : showingChapters}" show-pager="false" active-slide="activeSlide" on-slide-changed="slideChanged(index)">
       <ion-slide class="slide" ng-repeat="chapter in chaptersArray" ng-if="$index < chaptersCount">
         <ion-content>
           <div class="padding" ng-bind-html="to_trusted(book.chapters[$index].stringVerses)"></div>
@@ -16,23 +23,4 @@
       </ion-slide>
     </ion-slide-box>
   </ion-content>
-
-  <div id="player" ng-if="showDialpad" on-swipe-down="toggleDialpad()">
-    <div class="drop-shadow" ng-click="toggleDialpad()"></div>
-    <div class="dialpad animated slideInUp">
-      <ion-content>
-        <div class="row chapters" ng-repeat="chapter in chaptersArray" ng-if="$index %3 === 0">
-          <div class="col col-33" ng-if="$index < chaptersArray.length">
-            <div class="button card" ng-class="{'active': chapter === 1'}" ng-click="goToSlide($index)">{{$index + 1}}</div>
-          </div>
-          <div class="col col-33" ng-if="$index + 1 < chaptersArray.length">
-            <div class="button card" ng-click="goToSlide($index + 1)" >{{$index + 2}}</div>
-          </div>
-          <div class="col col-33" ng-if="$index + 2 < chaptersArray.length">
-            <div class="button card" ng-click="goToSlide($index + 2)">{{$index + 3}}</div>
-          </div>
-        </div>
-      </ion-content>
-    </div>
-  </div>
 </ion-view>
