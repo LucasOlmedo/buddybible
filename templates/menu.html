@@ -1,16 +1,16 @@
 <!-- <ion-nav-bar class="bar-custom" align-title="left" ng-class="{'has-no-shadow' : hasNoShadow}">
   <ion-nav-back-button class="no-text"></ion-nav-back-button>
 </ion-nav-bar> -->
-<ion-nav-view name="menuContent"></ion-nav-view>
+<ion-nav-view name="menuContent">
+</ion-nav-view>
 <!-- <ion-nav-view name="fabContent"></ion-nav-view> -->
-
 <script id="mainPopover.html" type="text/ng-template">
     <ion-popover-view>
         <ion-list>
             <ion-item ng-click="navigateTo('/app/settings')">Settings</ion-item>
-            <ion-item ng-clic="navigateTo('/app/settings')">How to use</ion-item>
-            <ion-item ng-clic="navigateTo('/app/settings')">About</ion-item>
-            <ion-item ng-clic="navigateTo('/app/settings')">Contact</ion-item>
+            <!-- <ion-item ng-clic="navigateTo('/app/settings')">How to use</ion-item> -->
+            <ion-item ng-click="navigateTo('/app/about')">About</ion-item>
+            <ion-item ng-click="showContactsModal()">Contact Us</ion-item>
         </ion-list>
     </ion-popover-view>
 </script>

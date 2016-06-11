@@ -41,6 +41,15 @@ angular.module('ionicons', ['ionic', 'jett.ionic.filter.bar', 'ionicons.controll
     }
   })
 
+  .state('app.about', {
+    url: '/about',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/about.html',
+      }
+    }
+  })
+
   .state('app.books', {
     url: '/books',
     views: {

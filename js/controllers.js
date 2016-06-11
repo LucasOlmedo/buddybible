@@ -1,9 +1,24 @@
 angular.module('ionicons.controllers', [])
 
-.controller('AppCtrl', function($scope, $timeout, $ionicPopover, $location) {
+.controller('AppCtrl', function($scope, $timeout, $ionicPopover, $ionicModal, $location) {
   $scope.showPackExtensions = false;
   $scope.searching = false;
   $scope.showDialpad = false;
+
+  $ionicModal.fromTemplateUrl('templates/contact.html', {
+    scope: $scope,
+    animation: 'fade-in'
+  }).then(function(modal) {
+    $scope.contactModal = modal;
+  });
+
+  $scope.showContactsModal = function(session){
+    $scope.closeMainPopover();
+    $scope.contactModal.show();
+  }
+  $scope.closeContactsModal = function() {
+    $scope.contactModal.hide();
+  };
 
   $ionicPopover.fromTemplateUrl('mainPopover.html', {
       scope: $scope
@@ -24,6 +39,10 @@ angular.module('ionicons.controllers', [])
       $location.path(path);
       // $state.go(path);
   }
+
+  // $timeout(function(){
+  //   $('#screen').fadeOut('slow');
+  // }, 2000);
 })
 
 .controller('BooksCtrl', function($scope, $rootScope, $ionicScrollDelegate, $ionicFilterBar, $timeout, $location, booksService) {
@@ -114,7 +133,7 @@ angular.module('ionicons.controllers', [])
         { text: '<i class="icon ion-android-share-alt balance"></i> Share' },
         { text: '<i class="icon ion-ios-color-wand assertiv"></i> Highlight' },
       ],
-      destructiveText: 'Cancel',
+      // destructiveText: 'Cancel',
       // destructiveText: '<i class="icon ion-close"></i> Cancel',
       // cancelText: 'Cancel',
       cancel: function() {
@@ -142,9 +161,9 @@ angular.module('ionicons.controllers', [])
       buttons: [
         { text: '<i class="icon zmdi zmdi-facebook b"></i> Facebook' },
         { text: '<i class="icon zmdi zmdi-twitter"></i> Twitter' },
-        { text: '<i class="icon ion-bluetooth"></i> Bluetooth' },
+        { text: '<i class="icon ion-android-mail"></i> Sms' },
       ],
-      destructiveText: 'Cancel',
+      // destructiveText: 'Cancel',
       // destructiveText: '<i class="icon ion-close"></i> Cancel',
       // cancelText: 'Cancel',
       cancel: function() {

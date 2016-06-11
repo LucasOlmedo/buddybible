@@ -1,3 +1,25 @@
+.layout-fill{
+  position: absolute;
+  top: 0;left: 0;
+  width: 100%;height: 100%;
+}
+.layout-flex{
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+}
+.layout-flex.as-column{
+  flex-direction: column;
+}
+.layout-flex.center-center{
+  align-items: center;
+  justify-content: center;
+}
+.layout-flex.wrap{
+  flex-wrap: wrap;
+}
 p {
     color: #555;
     margin: 0 0 25px;
@@ -57,10 +79,13 @@ p {
 }
 
 .books{
-  -webkit-flex-wrap: wrap;
-  -moz-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap !important;
+  -moz-flex-wrap: wrap !important;
+  flex-wrap: wrap !important;
+  
+  white-space: normal;
 }
+
 /*.books .col{
   min-width: 100%;
 }*/
@@ -262,4 +287,53 @@ p {
 .slideOutDown {
   -webkit-animation-name: slideOutDown;
   animation-name: slideOutDown;
+}
+
+/*FADE IN MODAL ANIMATION*/
+@media (min-width: 600px) and (max-width: 700px) {
+  .fade{
+    top: 10% !important;
+    right: 10%;
+    bottom: 0;
+    left: 10%;
+    min-height: 200px;
+  }
+}
+.modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0; }
+  .active .modal-backdrop-bg {
+    opacity: 0.5; }
+.fade {
+  top: 30%;
+  right: 5%;
+  bottom: 30%;
+  left: 5%;
+  min-height: 200px;
+  /*height: 240px;*/
+  width: 90%;
+  -webkit-transform: scale(0.0);
+  transform: scale(0.0);
+  opacity: 0;
+}
+
+.fade.radio-choices .scroll{
+  height: 185px !important;
+}
+
+.fade.ng-enter, .fade > .ng-enter {
+  -webkit-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 250ms;
+  transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 250ms;
+}
+.fade.ng-enter-active,
+.fade > .ng-enter-active {
+  -webkit-transform: scale(1.0);
+  transform: scale(1.0);
+  opacity: 1;
+}
+.fade.ng-leave, .fade > .ng-leave {
+  -webkit-transition: all ease-in-out 250ms;
+  transition: all ease-in-out 250ms;
 }
