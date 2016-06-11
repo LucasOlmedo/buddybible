@@ -12,7 +12,7 @@
     <gap:platform name="android" />
     <gap:platform name="winphone" />
     <preference name="phonegap-version" value="3.3.0" />
-    <preference name="orientation" value="auto" />
+    <preference name="orientation" value="potrait" />
     <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="false" />
     <preference name="DisallowOverscroll" value="true"/>
