@@ -28,6 +28,7 @@ angular.module('ionicons.services', [])
           // $http.get('bible/'+theBook+'.json')
           //   .success(function(data){
           //     data = data.chapters;
+          //     var chapters = [];
           //     for (var i = 0; i < data.length; i++) {
           //       chapter = {
           //         id           : parseFloat(i + 1),
@@ -43,7 +44,6 @@ angular.module('ionicons.services', [])
           //       def.reject("Failed to load book");
           //   });
 
-          // def.resolve([]);
           return def.promise;
           // return getBookChapters(book, ver); // FROM GETBIBLE API
         }

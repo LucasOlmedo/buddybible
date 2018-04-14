@@ -1,15 +1,10 @@
 onmessage = function(e) {
-  console.log('Message received from main script');
-  // var workerResult = 'Result: ' + (e.data[0] * e.data[1]);
-  // console.log('Posting message back to main script');
+     console.log('Message received from main script');
+     // var workerResult = 'Result: ' + (e.data[0] * e.data[1]);
+     // console.log('Posting message back to main script');
 
-  fetch('../bible/'+e.data+'.json')
-     .then(function(response) {
-          return response.json();
-     })
-     .then(function(res) {
-          console.log(res);
-          data = res.chapters;
+     function reqListener () {
+          data = this.response.chapters;
           var chapters = [];
           for (var i = 0; i < data.length; i++) {
            chapter = {
@@ -22,10 +17,37 @@ onmessage = function(e) {
          }
          
          postMessage(chapters);
-     })
-     .catch(function(err){
-          console.log("Error: " + err);
-     });
+     }
+
+     var oReq = new XMLHttpRequest();
+     oReq.responseType = "json";
+     oReq.addEventListener("load", reqListener);
+     oReq.open("GET", '../bible/'+e.data+'.json');
+     oReq.send();
+
+     // fetch('../bible/'+e.data+'.json')
+     // .then(function(response) {
+     //      return response.json();
+     // })
+     // .then(function(res) {
+     //      console.log(res);
+     //      data = res.chapters;
+     //      var chapters = [];
+     //      for (var i = 0; i < data.length; i++) {
+     //       chapter = {
+     //         id           : parseFloat(i + 1),
+     //         verses       : data[i].verses,
+     //         stringVerses : VerseString(data[i].verses),
+     //         verseCount   : data[i].verses.length
+     //       }
+     //       chapters.push(chapter);
+     //     }
+         
+     //     postMessage(chapters);
+     // })
+     // .catch(function(err){
+     //      console.log("Error: " + err);
+     // });
 }
 
 function VerseString(verses){

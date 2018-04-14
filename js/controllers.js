@@ -93,12 +93,16 @@ angular.module('ionicons.controllers', [])
     $scope.openBook = function(book){
       $state.go('app.book', {book: book});
 
-      booksService.view(book.replace(/\s+/g, '')).then(
-        function(data) {
-            $rootScope.$broadcast('book_fetched', data);
-        },
-        function(data) {
-            console.log('book retrieval failed.')
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          booksService.view(book.replace(/\s+/g, '')).then(
+            function(data) {
+                $rootScope.$broadcast('book_fetched', data);
+            },
+            function(data) {
+                console.log('book retrieval failed.')
+          });
+        })
       });
     }
 })
