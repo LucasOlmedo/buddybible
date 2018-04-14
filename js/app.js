@@ -66,7 +66,7 @@ angular.module('ionicons', ['ionic', 'jett.ionic.filter.bar', 'ionicons.controll
 
   .state('app.book', {
       url: '/book',
-      params : { book: null, chapter: null, verses: { array: true }},
+      params : { book: null },
       views: {
           'menuContent': {
               templateUrl: 'templates/book.html',

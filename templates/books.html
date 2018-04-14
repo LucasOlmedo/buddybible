@@ -3,7 +3,6 @@
 	    <h1 class="title">Buddy Bible</h1>
 	    <div class="buttons buttons-right">
 	      <button class="button button-icon button-clear ion-android-search" ng-click="search()"></button>
-	      <!-- <button class="button button-icon button-clear" ng-class="{'ion-android-menu' : viewStyle === 'grid', 'ion-grid' : viewStyle === 'list'}" ng-click="toggleViewStyle()"></button> -->
 	      <button class="button button-icon button-clear ion-android-more-vertical" ng-click="mainPopover.show($event)"></button>
 	    </div>
   	</ion-header-bar>
@@ -15,7 +14,7 @@
 			</div>
 	  	</div>
   		<div class="row books">
-  			<div id="{{$index}}" class="col" ng-repeat="book in books " ui-sref="app.book({book: book.name})">
+  			<div id="{{$index}}" class="col" ng-repeat="book in books " ui-sre="app.book({book: book.name})" ng-click="openBook(book.name)">
   				<div class="card" style="margin:0;">
   					<div class="item">
 	  					<h2>{{book.name}}</h2>

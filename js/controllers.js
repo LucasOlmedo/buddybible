@@ -45,7 +45,7 @@ angular.module('ionicons.controllers', [])
   // }, 2000);
 })
 
-.controller('BooksCtrl', function($scope, $rootScope, $ionicScrollDelegate, $ionicFilterBar, $timeout, $location, booksService) {
+.controller('BooksCtrl', function($scope, $rootScope, $state, $ionicScrollDelegate, $ionicFilterBar, $timeout, $location, booksService) {
     var vm = this;
     $scope.previewingABook = false;
     $scope.$parent.hasNoShadow = false;
@@ -55,24 +55,12 @@ angular.module('ionicons.controllers', [])
 
     booksService.all().then(
       function(books) {
-          for (var i = 0; i < books.length; i++) {
-            books[i].chapters = getChapters(books[i].chaptersCount);
-            // console.log();
-          };
           $scope.books = books;
           console.log('booklist returned to controller.');
       },
       function(data) {
           console.log('booklist retrieval failed.')
-    });
-
-    function getChapters(len){
-      a = [];
-      for (var i = 0; i < len; i++) {
-          a.push(i);
-      };
-      return a;
-    }
+      });
 
     $scope.search = function (){
       filterBarInstance = $ionicFilterBar.show({
@@ -101,6 +89,18 @@ angular.module('ionicons.controllers', [])
       
       $scope.viewStyle = $scope.viewStyle === 'list' ? 'grid' : 'list';
     }
+
+    $scope.openBook = function(book){
+      $state.go('app.book', {book: book});
+
+      booksService.view(book.replace(/\s+/g, '')).then(
+        function(data) {
+            $rootScope.$broadcast('book_fetched', data);
+        },
+        function(data) {
+            console.log('book retrieval failed.')
+      });
+    }
 })
 
 .controller('BookCtrl', function($scope, $sce, $timeout, $ionicActionSheet, $ionicPopup, $rootScope, $stateParams, $ionicSlideBoxDelegate, booksService){
@@ -110,12 +110,11 @@ angular.module('ionicons.controllers', [])
   $scope.showingChapters = false;
   var theBook = $stateParams.book.replace(/\s+/g, '');
   $scope.book.name = $stateParams.book;
-  $scope.chapter = $stateParams.chapter;
   $scope.chaptersArray = [0];
-  $scope.chapter = $stateParams.chapter ? $stateParams.chapter : 0;
+  // $scope.chapter = $stateParams.chapter ? $stateParams.chapter : 0;
+  $scope.chapter = 0;
 
   $timeout(function(){
-    // $scope.$parent.showDialpad = false;
     $scope.turnOn = 'on';
   },500);
 
@@ -231,24 +230,33 @@ angular.module('ionicons.controllers', [])
     }
   }
 
-  // var theBook = $scope.book.replace(/\s+/g, '');
-  booksService.view(theBook).then(
-    function(data) {
+  $scope.$on('book_fetched', function(e, data) { 
+        console.log(data); 
         $scope.book.chapters = data;
         $scope.chaptersCount = data.length;
-        // if (data.length > 4)
-        //   vm.getArray(3);
-        // else
+        
         vm.getArray(data.length);
-        // vm.goToSlide(2, 0);
-        // console.log('book returned to controller.');
+        
         $timeout(function(){
           vm.goToSlide($scope.chapter, 0);
         },500);
-    },
-    function(data) {
-        console.log('book retrieval failed.')
-  });
+   });
+
+  // var theBook = $scope.book.replace(/\s+/g, '');
+  // booksService.view(theBook).then(
+  //   function(data) {
+  //       $scope.book.chapters = data;
+  //       $scope.chaptersCount = data.length;
+        
+  //       vm.getArray(data.length);
+        
+  //       $timeout(function(){
+  //         vm.goToSlide($scope.chapter, 0);
+  //       },500);
+  //   },
+  //   function(data) {
+  //       console.log('book retrieval failed.')
+  // });
 
   $scope.to_trusted = function(html_code) {
     return $sce.trustAsHtml(html_code);
